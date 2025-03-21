@@ -449,4 +449,4 @@ with app.app_context():
     ornek_veriler_ekle()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

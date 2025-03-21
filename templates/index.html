@@ -1,12 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="hero">
-    <div class="container">
-        <h1>Yazılım Test Dünyasına Hoş Geldiniz</h1>
-        <p>SotecAI, modern yazılım test süreçleri için kapsamlı kaynaklar, araçlar ve bilgiler sunan bir platformdur. Test otomasyonu, performans testleri, güvenlik testleri ve daha fazlasını keşfedin.</p>
-        <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary">Blog Yazılarımız</a>
-        <a href="{{ url_for('araclar') }}" class="btn btn-outline">Test Araçları</a>
+<section class="hero" style="position: relative; overflow: hidden; padding: 6rem 0;">
+    <!-- Arka plan görseli (mevcut kod görseli) ile karıştırılmış bir renk geçişi -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(23, 37, 84, 0.85) 0%, rgba(30, 58, 138, 0.75) 100%); z-index: 1;"></div>
+    
+    <!-- Animasyonlu arka plan şekilleri -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/static/images/pattern.svg'); background-size: cover; opacity: 0.1; z-index: 2;"></div>
+    
+    <div class="container" style="position: relative; z-index: 3;">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Yazılım Test Dünyasına Hoş Geldiniz</h1>
+                <p style="font-size: 1.25rem; margin-bottom: 2.5rem; color: rgba(255,255,255,0.9); text-shadow: 0 1px 5px rgba(0,0,0,0.2); max-width: 600px;">SotecAI, modern yazılım test süreçleri için kapsamlı kaynaklar sunan yenilikçi bir platformdur. Test otomasyonu, performans ve güvenlik testlerinde bir adım öne çıkın.</p>
+                
+                <!-- Modern butonlar -->
+                <div>
+                    <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-right: 1rem; background: linear-gradient(to right, #3b82f6, #2563eb); border: none; transition: all 0.3s;">Blog Yazılarımız</a>
+                    <a href="{{ url_for('araclar') }}" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid white; background: transparent; color: white; transition: all 0.3s;">Test Araçları</a>
+                </div>
+            </div>
+            
+            <!-- Sağ tarafa görsel ekleme -->
+            <div class="col-lg-5 d-none d-lg-block">
+                <img src="{{ url_for('static', filename='images/testing-illustration.svg') }}" alt="Test Otomasyonu" style="max-width: 100%; filter: drop-shadow(0 10px 8px rgba(0,0,0,0.2));">
+            </div>
+        </div>
     </div>
 </section>
 

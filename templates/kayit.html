@@ -5,44 +5,46 @@
 {% block title %}Üye Ol - SotecAI{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="auth-container">
-        <div class="auth-header">
-            <h2>Üye Ol</h2>
-            <p>SotecAI'ye üye olarak test dünyasındaki kaynaklara erişin.</p>
-        </div>
-        
-        <form action="{{ url_for('kayit') }}" method="POST">
-            <div class="form-group">
-                <label for="ad" class="form-label">Adınız</label>
-                <input type="text" id="ad" name="ad" class="form-control" required>
+<div class="page-header-dark" style="min-height: 100vh; display: flex; align-items: center; margin-bottom: 0;">
+    <div class="container">
+        <div class="auth-container" style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 2.5rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); max-width: 500px; margin: 0 auto;">
+            <div class="auth-header">
+                <h2 style="color: white; margin-bottom: 1rem;">Üye Ol</h2>
+                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">SotecAI'ye üye olarak test dünyasındaki kaynaklara erişin.</p>
             </div>
             
-            <div class="form-group">
-                <label for="soyad" class="form-label">Soyadınız</label>
-                <input type="text" id="soyad" name="soyad" class="form-control" required>
-            </div>
+            <form action="{{ url_for('kayit') }}" method="POST">
+                <div class="form-group">
+                    <label for="ad" class="form-label" style="color: white;">Adınız</label>
+                    <input type="text" id="ad" name="ad" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="soyad" class="form-label" style="color: white;">Soyadınız</label>
+                    <input type="text" id="soyad" name="soyad" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label" style="color: white;">E-posta Adresiniz</label>
+                    <input type="email" id="email" name="email" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="parola" class="form-label" style="color: white;">Parolanız</label>
+                    <input type="password" id="parola" name="parola" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="parola_tekrar" class="form-label" style="color: white;">Parola Tekrar</label>
+                    <input type="password" id="parola_tekrar" name="parola_tekrar" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: linear-gradient(to right, #3b82f6, #2563eb); border: none; padding: 0.75rem; font-weight: 600; margin-top: 1rem;">Üye Ol</button>
+            </form>
             
-            <div class="form-group">
-                <label for="email" class="form-label">E-posta Adresiniz</label>
-                <input type="email" id="email" name="email" class="form-control" required>
+            <div class="auth-footer" style="margin-top: 2rem; text-align: center; color: white;">
+                Zaten hesabınız var mı? <a href="{{ url_for('giris') }}" style="color: #93c5fd; font-weight: 600;">Giriş Yapın</a>
             </div>
-            
-            <div class="form-group">
-                <label for="parola" class="form-label">Parolanız</label>
-                <input type="password" id="parola" name="parola" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="parola_tekrar" class="form-label">Parola Tekrar</label>
-                <input type="password" id="parola_tekrar" name="parola_tekrar" class="form-control" required>
-            </div>
-            
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Üye Ol</button>
-        </form>
-        
-        <div class="auth-footer">
-            Zaten hesabınız var mı? <a href="{{ url_for('giris') }}">Giriş Yapın</a>
         </div>
     </div>
 </div>
