@@ -1,0 +1,32 @@
+# templates/blog_detay.html
+{% extends 'base.html' %}
+
+{% block title %}{{ blog.baslik }} - SotecAI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="blog-detail">
+        <div class="blog-header">
+            <h1>{{ blog.baslik }}</h1>
+            <div class="blog-meta">
+                <span><i class="far fa-calendar"></i> {{ blog.tarih.strftime('%d.%m.%Y') }}</span>
+                <span style="margin-left: 1rem;"><i class="far fa-user"></i> Admin</span>
+            </div>
+            
+            <div class="blog-tags">
+                {% for etiket in blog.etiketler.split(',') %}
+                <span class="tag">{{ etiket }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="blog-content">
+            {{ blog.icerik|safe }}
+        </div>
+        
+        <div style="margin-top: 3rem;">
+            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Tüm Bloglar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

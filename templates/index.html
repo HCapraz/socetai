@@ -1,0 +1,193 @@
+# templates/index.html
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1>Yazılım Test Dünyasına Hoş Geldiniz</h1>
+        <p>SotecAI, modern yazılım test süreçleri için kapsamlı kaynaklar, araçlar ve bilgiler sunan bir platformdur. Test otomasyonu, performans testleri, güvenlik testleri ve daha fazlasını keşfedin.</p>
+        <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary">Blog Yazılarımız</a>
+        <a href="{{ url_for('araclar') }}" class="btn btn-outline">Test Araçları</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Yazılım Test Uzmanlık Alanlarımız</h2>
+            <p>SotecAI olarak yazılım test süreçlerinin her aşamasında uzmanlaşmış bilgi ve kaynaklarımızla size rehberlik ediyoruz.</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>Test Otomasyonu</h3>
+                <p>Selenium, Appium, Cypress gibi popüler araçlarla web ve mobil uygulamalarınız için kapsamlı test otomasyonu çözümleri.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>Performans Testleri</h3>
+                <p>JMeter, Gatling ve LoadRunner ile uygulamanızın yük altındaki performansını ölçün ve darboğazları tespit edin.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Güvenlik Testleri</h3>
+                <p>OWASP standartlarına uygun güvenlik testleri ile uygulamanızı güvenlik açıklarına karşı koruyun.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobil Test</h3>
+                <p>iOS ve Android platformlarında manuel ve otomatize test süreçleri ile mobil uygulamanızın kalitesini artırın.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>API Testleri</h3>
+                <p>Postman, SoapUI ve RestAssured ile servislerinizin doğru çalıştığından emin olun.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <h3>Test Stratejisi</h3>
+                <p>İhtiyaçlarınıza özel, kapsamlı test stratejileri ile yazılım kalite süreçlerinizi optimize edin.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="latest-posts">
+    <div class="container">
+        <div class="section-title">
+            <h2>Son Blog Yazıları</h2>
+            <p>Yazılım test dünyasındaki son gelişmeler, iyi uygulamalar ve ipuçları hakkında bilgi edinin.</p>
+        </div>
+        
+        <div class="blog-cards">
+            {% for blog in son_bloglar %}
+            <div class="blog-card">
+                <div class="blog-image" style="background-image: url('https://via.placeholder.com/400x200?text=Test+{{ loop.index }}')"></div>
+                <div class="blog-content">
+                    <div class="blog-date">{{ blog.tarih.strftime('%d.%m.%Y') }}</div>
+                    <h3 class="blog-title"><a href="{{ url_for('blog_detay', blog_id=blog.id) }}">{{ blog.baslik }}</a></h3>
+                    <p class="blog-excerpt">{{ blog.ozet }}</p>
+                    <a href="{{ url_for('blog_detay', blog_id=blog.id) }}" class="btn btn-primary">Devamını Oku</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary">Tüm Blog Yazıları</a>
+        </div>
+    </div>
+</section>
+
+<section class="tools">
+    <div class="container">
+        <div class="section-title">
+            <h2>Popüler Test Araçları</h2>
+            <p>Yazılım test süreçlerinizde kullanabileceğiniz modern ve etkili araçları keşfedin.</p>
+        </div>
+        
+        <div class="category-filters">
+            <button class="category-filter active" data-category="all">Tümü</button>
+            {% for kategori in kategoriler %}
+            <button class="category-filter" data-category="{{ kategori }}">{{ kategori }}</button>
+            {% endfor %}
+        </div>
+        
+        <div class="tools-list">
+            <div class="tool-item" data-category="Web Otomasyon">
+                <div class="tool-header">
+                    <div class="tool-logo">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div>
+                        <div class="tool-name">Selenium</div>
+                        <div class="tool-category">Web Otomasyon</div>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Web uygulamalarını test etmek için açık kaynaklı ve güçlü bir otomasyon aracı. Birçok programlama dili ile kullanılabilir.
+                </div>
+                <a href="https://www.selenium.dev/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="tool-item" data-category="Performans Testi">
+                <div class="tool-header">
+                    <div class="tool-logo">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div>
+                        <div class="tool-name">JMeter</div>
+                        <div class="tool-category">Performans Testi</div>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Apache JMeter, web uygulamalarının performans ve yük testleri için kullanılan açık kaynaklı bir Java uygulamasıdır.
+                </div>
+                <a href="https://jmeter.apache.org/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="tool-item" data-category="API Testi">
+                <div class="tool-header">
+                    <div class="tool-logo">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div>
+                        <div class="tool-name">Postman</div>
+                        <div class="tool-category">API Testi</div>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    API geliştirme ve test etme için popüler bir araç. API istekleri oluşturma, otomatize etme ve paylaşma imkanı sunar.
+                </div>
+                <a href="https://www.postman.com/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="tool-item" data-category="Mobil Test">
+                <div class="tool-header">
+                    <div class="tool-logo">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div>
+                        <div class="tool-name">Appium</div>
+                        <div class="tool-category">Mobil Test</div>
+                    </div>
+                </div>
+                <div class="tool-description">
+                    Mobil uygulamalar (iOS, Android) için açık kaynaklı bir test otomasyon aracı. Web Driver protokolünü kullanır.
+                </div>
+                <a href="https://appium.io/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('araclar') }}" class="btn btn-primary">Tüm Araçları Gör</a>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Test Süreçlerinizi Geliştirmeye Hazır mısınız?</h2>
+        <p>SotecAI'nin kapsamlı kaynaklarından yararlanmak, güncel bilgilere erişmek ve test topluluğumuzun bir parçası olmak için hemen üye olun.</p>
+        <a href="{{ url_for('kayit') }}" class="btn btn-outline">Hemen Üye Olun</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+# templates/blog_listesi.html
+{% extends 'base.html' %}
+
+{% block title %}Blog - SotecAI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Blog Yazıları</h1>
+        <p>Yazılım test dünyasındaki son gelişmeler, iyi uygulamalar ve uzman görüşleri hakkında bilgi edinin.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="blog-list">
+        {% for blog in bloglar %}
+        <div class="blog-card">
+            <div class="blog-image" style="background-image: url('https://via.placeholder.com/400x200?text=Test+{{ loop.index }}')"></div>
+            <div class="blog-content">
+                <div class="blog-date">{{ blog.tarih.strftime('%d.%m.%Y') }}</div>
+                <h3 class="blog-title"><a href="{{ url_for('blog_detay', blog_id=blog.id) }}">{{ blog.baslik }}</a></h3>
+                <p class="blog-excerpt">{{ blog.ozet }}</p>
+                <a href="{{ url_for('blog_detay', blog_id=blog.id) }}" class="btn btn-primary">Devamını Oku</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

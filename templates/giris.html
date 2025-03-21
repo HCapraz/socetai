@@ -1,0 +1,33 @@
+# templates/giris.html
+{% extends 'base.html' %}
+
+{% block title %}Giriş - SotecAI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2>Giriş Yap</h2>
+            <p>SotecAI hesabınıza giriş yapın.</p>
+        </div>
+        
+        <form action="{{ url_for('giris') }}" method="POST">
+            <div class="form-group">
+                <label for="email" class="form-label">E-posta Adresiniz</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="parola" class="form-label">Parolanız</label>
+                <input type="password" id="parola" name="parola" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Giriş Yap</button>
+        </form>
+        
+        <div class="auth-footer">
+            Hesabınız yok mu? <a href="{{ url_for('kayit') }}">Üye Olun</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

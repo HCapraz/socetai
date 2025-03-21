@@ -1,0 +1,67 @@
+# templates/hakkimizda.html
+{% extends 'base.html' %}
+
+{% block title %}Hakkımızda - SotecAI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Hakkımızda</h1>
+        <p>SotecAI'nin vizyonu, misyonu ve ekibi hakkında bilgi edinin.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2>Biz Kimiz?</h2>
+        <p>SotecAI, yazılım test dünyasında çalışan profesyoneller için kapsamlı kaynaklar, araçlar ve bilgiler sunan bir platformdur. Misyonumuz, modern yazılım test süreçlerini daha erişilebilir, verimli ve etkili hale getirmektir.</p>
+        
+        <h2 style="margin-top: 2rem;">Vizyonumuz</h2>
+        <p>Yazılım test alanında lider bilgi kaynağı olarak, profesyonellerin becerilerini geliştirmelerine ve yazılım kalitesini artırmalarına yardımcı olmak.</p>
+        
+        <h2 style="margin-top: 2rem;">Misyonumuz</h2>
+        <p>SotecAI olarak, yazılım test süreçlerini iyileştirmek için:</p>
+        <ul style="margin-bottom: 2rem;">
+            <li>Güncel ve kapsamlı bilgi kaynakları sunmak</li>
+            <li>En iyi uygulamaları ve yeni teknolojileri tanıtmak</li>
+            <li>Test otomasyon süreçlerini kolaylaştıracak çözümler geliştirmek</li>
+            <li>Test profesyonelleri arasında bir topluluk oluşturmak</li>
+            <li>Yazılım kalitesinin önemini vurgulamak</li>
+        </ul>
+        
+        <h2>Neden SotecAI?</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Uzman İçerik</h3>
+                <p>Test alanında uzman profesyoneller tarafından hazırlanan güncel ve kapsamlı içerikler.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Pratik Araçlar</h3>
+                <p>Test süreçlerinizi hızlandıracak ve kolaylaştıracak modern araçlar ve kaynaklar.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Aktif Topluluk</h3>
+                <p>Yazılım test alanındaki profesyonellerle bilgi ve deneyim paylaşabileceğiniz bir platform.</p>
+            </div>
+        </div>
+        
+        <h2 style="margin-top: 2rem;">Ekibimiz</h2>
+        <p>SotecAI, yazılım test dünyasında yılların deneyimine sahip profesyonellerden oluşan bir ekip tarafından yönetilmektedir. Ekibimiz, test otomasyonu, performans testleri, güvenlik testleri ve mobil test gibi alanlarda uzmanlık sahibidir.</p>
+        
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="{{ url_for('iletisim') }}" class="btn btn-primary">Bizimle İletişime Geçin</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

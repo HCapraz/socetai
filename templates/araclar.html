@@ -1,0 +1,42 @@
+# templates/araclar.html
+{% extends 'base.html' %}
+
+{% block title %}Test Araçları - SotecAI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Test Araçları</h1>
+        <p>Yazılım test süreçlerinizde kullanabileceğiniz modern ve etkili araçları keşfedin.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="category-filters">
+        <button class="category-filter active" data-category="all">Tümü</button>
+        {% for kategori in kategoriler %}
+        <button class="category-filter" data-category="{{ kategori }}">{{ kategori }}</button>
+        {% endfor %}
+    </div>
+    
+    <div class="tools-list">
+        {% for arac in araclar %}
+        <div class="tool-item" data-category="{{ arac.kategori }}">
+            <div class="tool-header">
+                <div class="tool-logo">
+                    <i class="fas fa-{% if arac.kategori == 'Web Otomasyon' %}globe{% elif arac.kategori == 'Performans Testi' %}tachometer-alt{% elif arac.kategori == 'API Testi' %}exchange-alt{% elif arac.kategori == 'Mobil Test' %}mobile-alt{% elif arac.kategori == 'Test Framework' %}vial{% elif arac.kategori == 'Kod Kalitesi' %}code{% elif arac.kategori == 'BDD' %}comment{% else %}tools{% endif %}"></i>
+                </div>
+                <div>
+                    <div class="tool-name">{{ arac.ad }}</div>
+                    <div class="tool-category">{{ arac.kategori }}</div>
+                </div>
+            </div>
+            <div class="tool-description">
+                {{ arac.aciklama }}
+            </div>
+            <a href="{{ arac.link }}" target="_blank" class="tool-link">Resmi Siteyi Ziyaret Et <i class="fas fa-arrow-right"></i></a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

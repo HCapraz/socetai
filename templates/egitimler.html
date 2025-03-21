@@ -1,0 +1,110 @@
+# templates/egitimler.html
+{% extends 'base.html' %}
+
+{% block title %}Eğitimler - SotecAI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Test Eğitimleri</h1>
+        <p>Yazılım test becerilerinizi geliştirmek için tasarlanmış kapsamlı eğitim programlarımız.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div style="max-width: 800px; margin: 0 auto 3rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2>Eğitim Programlarımız</h2>
+            <p>Yazılım test alanında kariyerinizi ilerletmek için ihtiyacınız olan tüm eğitimleri burada bulabilirsiniz.</p>
+        </div>
+        
+        <div class="features-grid" style="grid-template-columns: 1fr; gap: 1.5rem;">
+            <div class="feature-card">
+                <h3><i class="fas fa-graduation-cap" style="color: var(--primary); margin-right: 0.5rem;"></i> Selenium ile Test Otomasyonu</h3>
+                <p style="margin-bottom: 1rem;">Web uygulamalarınızı otomatize etmek için Selenium WebDriver'ı derinlemesine öğrenin. Java ve Python örnekleriyle Page Object Model (POM) ve diğer iyi pratikleri uygulayın.</p>
+                <div>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
+                        <i class="far fa-clock"></i> 24 Saat
+                    </span>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <i class="far fa-user"></i> Başlangıç-Orta Seviye
+                    </span>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3><i class="fas fa-mobile-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> Appium ile Mobil Test Otomasyonu</h3>
+                <p style="margin-bottom: 1rem;">iOS ve Android uygulamalarını test etmek için Appium'u kullanmayı öğrenin. Gerçek cihazlar ve emülatörler üzerinde test senaryoları oluşturun ve çalıştırın.</p>
+                <div>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
+                        <i class="far fa-clock"></i> 16 Saat
+                    </span>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <i class="far fa-user"></i> Orta Seviye
+                    </span>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3><i class="fas fa-exchange-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> API Test Otomasyonu</h3>
+                <p style="margin-bottom: 1rem;">REST ve SOAP API'lerini test etmek için Postman, RestAssured ve SoapUI gibi araçları kullanmayı öğrenin. Test senaryolarınızı CI/CD pipeline'larına entegre edin.</p>
+                <div>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
+                        <i class="far fa-clock"></i> 12 Saat
+                    </span>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <i class="far fa-user"></i> Başlangıç-Orta Seviye
+                    </span>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3><i class="fas fa-tachometer-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> JMeter ile Performans Testleri</h3>
+                <p style="margin-bottom: 1rem;">Web uygulamalarınızın performansını ölçmek ve iyileştirmek için JMeter kullanımını öğrenin. Yük testleri, stres testleri ve dayanıklılık testleri oluşturun.</p>
+                <div>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
+                        <i class="far fa-clock"></i> 16 Saat
+                    </span>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <i class="far fa-user"></i> Orta Seviye
+                    </span>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3><i class="fas fa-shield-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> Güvenlik Testleri Temelleri</h3>
+                <p style="margin-bottom: 1rem;">OWASP Top 10 güvenlik açıklarını anlamak ve test etmek için gereken temel bilgileri öğrenin. Zafiyet taraması araçlarını kullanmayı ve sonuçları yorumlamayı öğrenin.</p>
+                <div>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
+                        <i class="far fa-clock"></i> 20 Saat
+                    </span>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <i class="far fa-user"></i> Orta-İleri Seviye
+                    </span>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3><i class="fas fa-sitemap" style="color: var(--primary); margin-right: 0.5rem;"></i> Test Stratejisi ve Yönetimi</h3>
+                <p style="margin-bottom: 1rem;">Etkili test stratejileri oluşturmak, test planları geliştirmek ve test süreçlerini yönetmek için gereken becerileri kazanın. Test yönetimi araçlarını kullanmayı öğrenin.</p>
+                <div>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
+                        <i class="far fa-clock"></i> 12 Saat
+                    </span>
+                    <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
+                        <i class="far fa-user"></i> İleri Seviye
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background-color: var(--light); padding: 2rem; border-radius: 8px; margin-top: 3rem;">
+            <h3 style="text-align: center; margin-bottom: 1rem;">Özel Eğitim Talebi</h3>
+            <p style="text-align: center; margin-bottom: 1.5rem;">Ekibinizin ihtiyaçlarına özel eğitim programları için bizimle iletişime geçin.</p>
+            <div style="text-align: center;">
+                <a href="{{ url_for('iletisim') }}" class="btn btn-primary">İletişime Geçin</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
