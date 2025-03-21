@@ -1,4 +1,3 @@
-# templates/index.html
 {% extends 'base.html' %}
 
 {% block content %}
@@ -80,7 +79,17 @@
         <div class="blog-cards">
             {% for blog in son_bloglar %}
             <div class="blog-card">
+                {% if "Python" in blog.baslik %}
+                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/python-logo.png') }}'); background-size: contain; background-repeat: no-repeat; background-color: #f9f9f9; background-position: center;"></div>
+                {% elif "Trendler" in blog.baslik %}
+                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/trendler.png') }}'); background-size: cover; background-position: center;"></div>
+                {% elif "API" in blog.baslik %}
+                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/api.png') }}'); background-size: cover; background-position: center;"></div>
+                {% elif "Veri" in blog.baslik %}
+                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/data.png') }}'); background-size: cover; background-position: center;"></div>
+                {% else %}
                 <div class="blog-image" style="background-image: url('https://via.placeholder.com/400x200?text=Test+{{ loop.index }}')"></div>
+                {% endif %}
                 <div class="blog-content">
                     <div class="blog-date">{{ blog.tarih.strftime('%d.%m.%Y') }}</div>
                     <h3 class="blog-title"><a href="{{ url_for('blog_detay', blog_id=blog.id) }}">{{ blog.baslik }}</a></h3>

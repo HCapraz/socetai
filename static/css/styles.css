@@ -1,0 +1,33 @@
+.tool-item {
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px; /* Köşeleri yuvarlatma */
+    padding: 20px;
+    color: white; /* Yazıyı daha okunaklı hale getirmek için */
+    font-weight: bold;
+}
+
+/* Her kategoriye özel arka plan resmi */
+.tool-item[data-category="Test Otomasyonu"] {
+    background-image: url('/static/images/test-otomasyon.jpg');
+}
+
+.tool-item[data-category="Performans Testleri"] {
+    background-image: url('/static/images/performans-testleri.jpg');
+}
+
+.tool-item[data-category="Güvenlik Testleri"] {
+    background-image: url('/static/images/guvenlik-testleri.jpg');
+}
+
+.tool-item[data-category="Mobil Test"] {
+    background-image: url('/static/images/mobil-test.jpg');
+}
+
+.tool-item[data-category="API Testleri"] {
+    background-image: url('/static/images/api-testleri.jpg');
+}
+
+.tool-item[data-category="Test Stratejisi"] {
+    background-image: url('/static/images/test-stratejisi.jpg');
+}
