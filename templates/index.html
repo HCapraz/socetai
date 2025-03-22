@@ -12,24 +12,25 @@
 {% block content %}
 {% set current_lang = session.get('lang', 'tr') %}
 
-<section class="hero" style="position: relative; overflow: hidden; padding: 6rem 0;">
-    <!-- Arka plan görseli (mevcut kod görseli) ile karıştırılmış bir renk geçişi -->
+<section class="hero" style="position: relative; overflow: hidden; padding: 6rem 0; min-height: 600px; display: flex; align-items: center;">
+    <!-- Arka plan görseli ile karıştırılmış renk geçişi -->
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(23, 37, 84, 0.85) 0%, rgba(30, 58, 138, 0.75) 100%); z-index: 1;"></div>
     
     <!-- Animasyonlu arka plan şekilleri -->
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/static/images/pattern.svg'); background-size: cover; opacity: 0.1; z-index: 2;"></div>
     
     <div class="container" style="position: relative; z-index: 3;">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
                     {% if current_lang == 'tr' %}
                         Yazılım Test Dünyasına Hoş Geldiniz
                     {% else %}
                         Welcome to the Software Testing World
                     {% endif %}
                 </h1>
-                <p style="font-size: 1.25rem; margin-bottom: 2.5rem; color: rgba(255,255,255,0.9); text-shadow: 0 1px 5px rgba(0,0,0,0.2); max-width: 600px;">
+                
+                <p style="font-size: 1.35rem; margin-bottom: 2.5rem; color: rgba(255,255,255,0.95); text-shadow: 0 1px 5px rgba(0,0,0,0.2); max-width: 90%; margin-left: auto; margin-right: auto;">
                     {% if current_lang == 'tr' %}
                         SotecAI, modern yazılım test süreçleri için kapsamlı kaynaklar sunan yenilikçi bir platformdur. Test otomasyonu, performans ve güvenlik testlerinde bir adım öne çıkın.
                     {% else %}
@@ -39,7 +40,7 @@
                 
                 <!-- Modern butonlar -->
                 <div class="cta-container">
-                    <a href="{{ url_for('hakkimizda') }}" class="btn btn-cta">
+                    <a href="{{ url_for('hakkimizda') }}" class="btn btn-cta" style="padding: 0.8rem 2rem; font-weight: 600; transition: all 0.3s ease;">
                         {% if current_lang == 'tr' %}
                             Hadi Başlayalım!
                         {% else %}
@@ -48,26 +49,28 @@
                     </a>
                 </div>
             </div>
-            
-            <!-- Sağ tarafa görsel ekleme -->
-            <div class="col-lg-5 d-none d-lg-block">
-                <img src="{{ url_for('static', filename='images/testing-illustration.svg') }}" alt="Test Otomasyonu" style="max-width: 100%; filter: drop-shadow(0 10px 8px rgba(0,0,0,0.2));">
+        </div>
+        
+        <!-- Alttaki görsel - responsive ve merkezi -->
+        <div class="row" style="margin-top: 60px;">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <img src="{{ url_for('static', filename='images/testing-illustration.svg') }}" alt="Test Otomasyonu" style="max-width: 500px; width: 100%; filter: drop-shadow(0 10px 8px rgba(0,0,0,0.2)); transition: transform 0.3s ease; transform: translateY(0); animation: float 6s ease-in-out infinite;">
             </div>
         </div>
     </div>
 </section>
 
-<section class="video-section" style="padding: 4rem 0; background-color: #dbeafe;">
+<section class="video-section" style="padding: 5rem 0; background-color: #dbeafe;">
     <div class="container">
-        <div class="section-title">
-            <h2>
+        <div class="section-title text-center" style="margin-bottom: 3rem;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 700;">
                 {% if current_lang == 'tr' %}
                     Neden Yazılım Testi?
                 {% else %}
                     Why Software Testing?
                 {% endif %}
             </h2>
-            <p>
+            <p style="font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto; color: #475569;">
                 {% if current_lang == 'tr' %}
                     Yazılım test süreçlerini daha iyi anlamanız için uzman içeriklerimizi izleyin.
                 {% else %}
@@ -76,45 +79,49 @@
             </p>
         </div>
         
-        <div class="video-container">
+        <div class="video-container" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
             <!-- İlk Video -->
-            <div class="video-wrapper">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/0tSGZabYVYY?si=3zfSDuku_ggafVvp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h3>
+            <div class="video-wrapper" style="flex: 1; min-width: 300px; max-width: 560px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <h3 style="padding: 1.5rem; margin: 0; font-size: 1.2rem; color: #1e3a8a; font-weight: 600; text-align: center; border-bottom: 1px solid #e2e8f0;">
                     {% if current_lang == 'tr' %}
                         SDET nedir ve ne yapar?
                     {% else %}
                         What is an SDET and what do they do?
                     {% endif %}
                 </h3>
+                <div style="padding: 20px;">
+                    <iframe width="100%" height="280" src="https://www.youtube.com/embed/0tSGZabYVYY?si=3zfSDuku_ggafVvp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 8px;"></iframe>
+                </div>
             </div>
             
             <!-- İkinci Video -->
-            <div class="video-wrapper">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/nhmQrjyVwlc?si=6YAhmOL4bMqlHL6-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h3>
+            <div class="video-wrapper" style="flex: 1; min-width: 300px; max-width: 560px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.3s ease;">
+                <h3 style="padding: 1.5rem; margin: 0; font-size: 1.2rem; color: #1e3a8a; font-weight: 600; text-align: center; border-bottom: 1px solid #e2e8f0;">
                     {% if current_lang == 'tr' %}
                         Yazılım Testi Nedir, Yazılım Test Uzmanı kimdir ve ne yapar?
                     {% else %}
                         What is Software Testing, who is a Software Test Engineer and what do they do?
                     {% endif %}
                 </h3>
+                <div style="padding: 20px;">
+                    <iframe width="100%" height="280" src="https://www.youtube.com/embed/nhmQrjyVwlc?si=6YAhmOL4bMqlHL6-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 8px;"></iframe>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="features">
+<section class="features" style="padding: 5rem 0; background-color: #f8fafc;">
     <div class="container">
-        <div class="section-title">
-            <h2>
+        <div class="section-title text-center" style="margin-bottom: 3.5rem;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 700;">
                 {% if current_lang == 'tr' %}
                     Yazılım Test Uzmanlık Alanlarımız
                 {% else %}
                     Our Software Testing Expertise Areas
                 {% endif %}
             </h2>
-            <p>
+            <p style="font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto; color: #475569;">
                 {% if current_lang == 'tr' %}
                     SotecAI olarak yazılım test süreçlerinin her aşamasında uzmanlaşmış bilgi ve kaynaklarımızla size rehberlik ediyoruz.
                 {% else %}
@@ -123,19 +130,19 @@
             </p>
         </div>
         
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
+        <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 2rem;">
+            <div class="feature-card" style="background: white; border-radius: 12px; padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                <div class="feature-icon" style="font-size: 2rem; color: #3b82f6; margin-bottom: 1.2rem;">
                     <i class="fas fa-robot"></i>
                 </div>
-                <h3>
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 600;">
                     {% if current_lang == 'tr' %}
                         Test Otomasyonu
                     {% else %}
                         Test Automation
                     {% endif %}
                 </h3>
-                <p>
+                <p style="color: #64748b; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         Selenium, Appium, Cypress gibi popüler araçlarla web ve mobil uygulamalarınız için kapsamlı test otomasyonu çözümleri.
                     {% else %}
@@ -144,18 +151,18 @@
                 </p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">
+            <div class="feature-card" style="background: white; border-radius: 12px; padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                <div class="feature-icon" style="font-size: 2rem; color: #3b82f6; margin-bottom: 1.2rem;">
                     <i class="fas fa-tachometer-alt"></i>
                 </div>
-                <h3>
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 600;">
                     {% if current_lang == 'tr' %}
                         Performans Testleri
                     {% else %}
                         Performance Testing
                     {% endif %}
                 </h3>
-                <p>
+                <p style="color: #64748b; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         JMeter, Gatling ve LoadRunner ile uygulamanızın yük altındaki performansını ölçün ve darboğazları tespit edin.
                     {% else %}
@@ -164,18 +171,18 @@
                 </p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">
+            <div class="feature-card" style="background: white; border-radius: 12px; padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                <div class="feature-icon" style="font-size: 2rem; color: #3b82f6; margin-bottom: 1.2rem;">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <h3>
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 600;">
                     {% if current_lang == 'tr' %}
                         Güvenlik Testleri
                     {% else %}
                         Security Testing
                     {% endif %}
                 </h3>
-                <p>
+                <p style="color: #64748b; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         OWASP standartlarına uygun güvenlik testleri ile uygulamanızı güvenlik açıklarına karşı koruyun.
                     {% else %}
@@ -184,18 +191,18 @@
                 </p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">
+            <div class="feature-card" style="background: white; border-radius: 12px; padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                <div class="feature-icon" style="font-size: 2rem; color: #3b82f6; margin-bottom: 1.2rem;">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
-                <h3>
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 600;">
                     {% if current_lang == 'tr' %}
                         Mobil Test
                     {% else %}
                         Mobile Testing
                     {% endif %}
                 </h3>
-                <p>
+                <p style="color: #64748b; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         iOS ve Android platformlarında manuel ve otomatize test süreçleri ile mobil uygulamanızın kalitesini artırın.
                     {% else %}
@@ -204,18 +211,18 @@
                 </p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">
+            <div class="feature-card" style="background: white; border-radius: 12px; padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                <div class="feature-icon" style="font-size: 2rem; color: #3b82f6; margin-bottom: 1.2rem;">
                     <i class="fas fa-code"></i>
                 </div>
-                <h3>
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 600;">
                     {% if current_lang == 'tr' %}
                         API Testleri
                     {% else %}
                         API Testing
                     {% endif %}
                 </h3>
-                <p>
+                <p style="color: #64748b; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         Postman, SoapUI ve RestAssured ile servislerinizin doğru çalıştığından emin olun.
                     {% else %}
@@ -224,18 +231,18 @@
                 </p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">
+            <div class="feature-card" style="background: white; border-radius: 12px; padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                <div class="feature-icon" style="font-size: 2rem; color: #3b82f6; margin-bottom: 1.2rem;">
                     <i class="fas fa-sitemap"></i>
                 </div>
-                <h3>
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 600;">
                     {% if current_lang == 'tr' %}
                         Test Stratejisi
                     {% else %}
                         Test Strategy
                     {% endif %}
                 </h3>
-                <p>
+                <p style="color: #64748b; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         İhtiyaçlarınıza özel, kapsamlı test stratejileri ile yazılım kalite süreçlerinizi optimize edin.
                     {% else %}
@@ -247,17 +254,17 @@
     </div>
 </section>
 
-<section class="latest-posts">
+<section class="latest-posts" style="padding: 5rem 0; background-color: #ffffff;">
     <div class="container">
-        <div class="section-title">
-            <h2>
+        <div class="section-title text-center" style="margin-bottom: 3.5rem;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 700;">
                 {% if current_lang == 'tr' %}
                     Son Blog Yazıları
                 {% else %}
                     Latest Blog Posts
                 {% endif %}
             </h2>
-            <p>
+            <p style="font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto; color: #475569;">
                 {% if current_lang == 'tr' %}
                     Yazılım test dünyasındaki son gelişmeler, iyi uygulamalar ve ipuçları hakkında bilgi edinin.
                 {% else %}
@@ -266,24 +273,24 @@
             </p>
         </div>
         
-        <div class="blog-cards">
+        <div class="blog-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px;">
             {% for blog in son_bloglar %}
-            <div class="blog-card">
+            <div class="blog-card" style="border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease;">
                 {% if "Python" in blog.baslik %}
-                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/python-logo.png') }}'); background-size: contain; background-repeat: no-repeat; background-color: #f9f9f9; background-position: center;"></div>
+                <div class="blog-image" style="height: 200px; background-image: url('{{ url_for('static', filename='images/python-logo.png') }}'); background-size: contain; background-repeat: no-repeat; background-color: #f9f9f9; background-position: center;"></div>
                 {% elif "Trendler" in blog.baslik %}
-                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/trendler.png') }}'); background-size: cover; background-position: center;"></div>
+                <div class="blog-image" style="height: 200px; background-image: url('{{ url_for('static', filename='images/trendler.png') }}'); background-size: cover; background-position: center;"></div>
                 {% elif "API" in blog.baslik %}
-                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/api.png') }}'); background-size: cover; background-position: center;"></div>
+                <div class="blog-image" style="height: 200px; background-image: url('{{ url_for('static', filename='images/api.png') }}'); background-size: cover; background-position: center;"></div>
                 {% elif "Veri" in blog.baslik %}
-                <div class="blog-image" style="background-image: url('{{ url_for('static', filename='images/data.png') }}'); background-size: cover; background-position: center;"></div>
+                <div class="blog-image" style="height: 200px; background-image: url('{{ url_for('static', filename='images/data.png') }}'); background-size: cover; background-position: center;"></div>
                 {% else %}
-                <div class="blog-image" style="background-image: url('https://via.placeholder.com/400x200?text=Test+{{ loop.index }}')"></div>
+                <div class="blog-image" style="height: 200px; background-image: url('https://via.placeholder.com/400x200?text=Test+{{ loop.index }}')"></div>
                 {% endif %}
-                <div class="blog-content">
-                    <div class="blog-date">{{ blog.tarih.strftime('%d.%m.%Y') }}</div>
-                    <h3 class="blog-title">
-                        <a href="{{ url_for('blog_detay', blog_id=blog.id) }}">
+                <div class="blog-content" style="padding: 1.5rem;">
+                    <div class="blog-date" style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.7rem;">{{ blog.tarih.strftime('%d.%m.%Y') }}</div>
+                    <h3 class="blog-title" style="font-size: 1.3rem; margin-bottom: 1rem; line-height: 1.4; font-weight: 600;">
+                        <a href="{{ url_for('blog_detay', blog_id=blog.id) }}" style="color: #1e3a8a; text-decoration: none; transition: color 0.2s ease;">
                             {% if current_lang == 'tr' %}
                                 {{ blog.baslik }}
                             {% else %}
@@ -301,7 +308,7 @@
                             {% endif %}
                         </a>
                     </h3>
-                    <p class="blog-excerpt">
+                    <p class="blog-excerpt" style="color: #64748b; margin-bottom: 1.5rem; line-height: 1.6;">
                         {% if current_lang == 'tr' %}
                             {{ blog.ozet }}
                         {% else %}
@@ -318,7 +325,7 @@
                             {% endif %}
                         {% endif %}
                     </p>
-                    <a href="{{ url_for('blog_detay', blog_id=blog.id) }}" class="btn btn-primary">
+                    <a href="{{ url_for('blog_detay', blog_id=blog.id) }}" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 500; border-radius: 4px; transition: background-color 0.3s ease, transform 0.2s ease;">
                         {% if current_lang == 'tr' %}
                             Devamını Oku
                         {% else %}
@@ -330,8 +337,8 @@
             {% endfor %}
         </div>
         
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary">
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary" style="padding: 0.8rem 2rem; font-weight: 500; transition: all 0.3s ease; border-radius: 6px;">
                 {% if current_lang == 'tr' %}
                     Tüm Blog Yazıları
                 {% else %}
@@ -342,17 +349,17 @@
     </div>
 </section>
 
-<section class="tools">
+<section class="tools" style="padding: 5rem 0; background-color: #f1f5f9;">
     <div class="container">
-        <div class="section-title">
-            <h2>
+        <div class="section-title text-center" style="margin-bottom: 3rem;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 1rem; color: #1e3a8a; font-weight: 700;">
                 {% if current_lang == 'tr' %}
                     Popüler Test Araçları
                 {% else %}
                     Popular Testing Tools
                 {% endif %}
             </h2>
-            <p>
+            <p style="font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto; color: #475569;">
                 {% if current_lang == 'tr' %}
                     Yazılım test süreçlerinizde kullanabileceğiniz modern ve etkili araçları keşfedin.
                 {% else %}
@@ -361,8 +368,8 @@
             </p>
         </div>
         
-        <div class="category-filters">
-            <button class="category-filter active" data-category="all">
+        <div class="category-filters" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 2.5rem;">
+            <button class="category-filter active" data-category="all" style="padding: 0.6rem 1.2rem; background-color: #3b82f6; color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
                 {% if current_lang == 'tr' %}
                     Tümü
                 {% else %}
@@ -370,7 +377,7 @@
                 {% endif %}
             </button>
             {% for kategori in kategoriler %}
-            <button class="category-filter" data-category="{{ kategori }}">
+            <button class="category-filter" data-category="{{ kategori }}" style="padding: 0.6rem 1.2rem; background-color: #e2e8f0; color: #1e3a8a; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
                 {% if current_lang == 'tr' %}
                     {{ kategori }}
                 {% else %}
@@ -384,15 +391,15 @@
             {% endfor %}
         </div>
         
-        <div class="tools-list">
-            <div class="tool-item" data-category="Web Otomasyon">
-                <div class="tool-header">
-                    <div class="tool-logo">
+        <div class="tools-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+            <div class="tool-item" data-category="Web Otomasyon" style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 1.2rem;">
+                    <div class="tool-logo" style="width: 50px; height: 50px; border-radius: 50%; background-color: #dbeafe; display: flex; justify-content: center; align-items: center; margin-right: 15px; font-size: 1.4rem; color: #3b82f6;">
                         <i class="fas fa-globe"></i>
                     </div>
                     <div>
-                        <div class="tool-name">Selenium</div>
-                        <div class="tool-category">
+                        <div class="tool-name" style="font-size: 1.3rem; font-weight: 600; color: #1e3a8a;">Selenium</div>
+                        <div class="tool-category" style="font-size: 0.9rem; color: #64748b;">
                             {% if current_lang == 'tr' %}
                                 Web Otomasyon
                             {% else %}
@@ -401,30 +408,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="tool-description">
+                <div class="tool-description" style="color: #475569; margin-bottom: 1.5rem; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         Web uygulamalarını test etmek için açık kaynaklı ve güçlü bir otomasyon aracı. Birçok programlama dili ile kullanılabilir.
                     {% else %}
                         An open-source and powerful automation tool for testing web applications. It can be used with many programming languages.
                     {% endif %}
                 </div>
-                <a href="https://www.selenium.dev/" target="_blank" class="tool-link">
+                <a href="https://www.selenium.dev/" target="_blank" class="tool-link" style="display: inline-flex; align-items: center; color: #3b82f6; font-weight: 500; text-decoration: none; transition: color 0.2s ease;">
                     {% if current_lang == 'tr' %}
-                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                        Detaylı Bilgi <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% else %}
-                        Detailed Information <i class="fas fa-arrow-right"></i>
+                        Detailed Information <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% endif %}
                 </a>
             </div>
             
-            <div class="tool-item" data-category="Performans Testi">
-                <div class="tool-header">
-                    <div class="tool-logo">
+            <div class="tool-item" data-category="Performans Testi" style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 1.2rem;">
+                    <div class="tool-logo" style="width: 50px; height: 50px; border-radius: 50%; background-color: #dbeafe; display: flex; justify-content: center; align-items: center; margin-right: 15px; font-size: 1.4rem; color: #3b82f6;">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     <div>
-                        <div class="tool-name">JMeter</div>
-                        <div class="tool-category">
+                        <div class="tool-name" style="font-size: 1.3rem; font-weight: 600; color: #1e3a8a;">JMeter</div>
+                        <div class="tool-category" style="font-size: 0.9rem; color: #64748b;">
                             {% if current_lang == 'tr' %}
                                 Performans Testi
                             {% else %}
@@ -433,30 +440,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="tool-description">
+                <div class="tool-description" style="color: #475569; margin-bottom: 1.5rem; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         Apache JMeter, web uygulamalarının performans ve yük testleri için kullanılan açık kaynaklı bir Java uygulamasıdır.
                     {% else %}
                         Apache JMeter is an open-source Java application used for performance and load testing of web applications.
                     {% endif %}
                 </div>
-                <a href="https://jmeter.apache.org/" target="_blank" class="tool-link">
+                <a href="https://jmeter.apache.org/" target="_blank" class="tool-link" style="display: inline-flex; align-items: center; color: #3b82f6; font-weight: 500; text-decoration: none; transition: color 0.2s ease;">
                     {% if current_lang == 'tr' %}
-                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                        Detaylı Bilgi <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% else %}
-                        Detailed Information <i class="fas fa-arrow-right"></i>
+                        Detailed Information <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% endif %}
                 </a>
             </div>
             
-            <div class="tool-item" data-category="API Testi">
-                <div class="tool-header">
-                    <div class="tool-logo">
+            <div class="tool-item" data-category="API Testi" style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 1.2rem;">
+                    <div class="tool-logo" style="width: 50px; height: 50px; border-radius: 50%; background-color: #dbeafe; display: flex; justify-content: center; align-items: center; margin-right: 15px; font-size: 1.4rem; color: #3b82f6;">
                         <i class="fas fa-exchange-alt"></i>
                     </div>
                     <div>
-                        <div class="tool-name">Postman</div>
-                        <div class="tool-category">
+                        <div class="tool-name" style="font-size: 1.3rem; font-weight: 600; color: #1e3a8a;">Postman</div>
+                        <div class="tool-category" style="font-size: 0.9rem; color: #64748b;">
                             {% if current_lang == 'tr' %}
                                 API Testi
                             {% else %}
@@ -465,30 +472,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="tool-description">
+                <div class="tool-description" style="color: #475569; margin-bottom: 1.5rem; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         API geliştirme ve test etme için popüler bir araç. API istekleri oluşturma, otomatize etme ve paylaşma imkanı sunar.
                     {% else %}
                         A popular tool for API development and testing. It offers the ability to create, automate, and share API requests.
                     {% endif %}
                 </div>
-                <a href="https://www.postman.com/" target="_blank" class="tool-link">
+                <a href="https://www.postman.com/" target="_blank" class="tool-link" style="display: inline-flex; align-items: center; color: #3b82f6; font-weight: 500; text-decoration: none; transition: color 0.2s ease;">
                     {% if current_lang == 'tr' %}
-                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                        Detaylı Bilgi <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% else %}
-                        Detailed Information <i class="fas fa-arrow-right"></i>
+                        Detailed Information <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% endif %}
                 </a>
             </div>
             
-            <div class="tool-item" data-category="Mobil Test">
-                <div class="tool-header">
-                    <div class="tool-logo">
+            <div class="tool-item" data-category="Mobil Test" style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                <div class="tool-header" style="display: flex; align-items: center; margin-bottom: 1.2rem;">
+                    <div class="tool-logo" style="width: 50px; height: 50px; border-radius: 50%; background-color: #dbeafe; display: flex; justify-content: center; align-items: center; margin-right: 15px; font-size: 1.4rem; color: #3b82f6;">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <div>
-                        <div class="tool-name">Appium</div>
-                        <div class="tool-category">
+                        <div class="tool-name" style="font-size: 1.3rem; font-weight: 600; color: #1e3a8a;">Appium</div>
+                        <div class="tool-category" style="font-size: 0.9rem; color: #64748b;">
                             {% if current_lang == 'tr' %}
                                 Mobil Test
                             {% else %}
@@ -497,25 +504,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="tool-description">
+                <div class="tool-description" style="color: #475569; margin-bottom: 1.5rem; line-height: 1.6;">
                     {% if current_lang == 'tr' %}
                         Mobil uygulamalar (iOS, Android) için açık kaynaklı bir test otomasyon aracı. Web Driver protokolünü kullanır.
                     {% else %}
                         An open-source test automation tool for mobile applications (iOS, Android). It uses the Web Driver protocol.
                     {% endif %}
                 </div>
-                <a href="https://appium.io/" target="_blank" class="tool-link">
+                <a href="https://appium.io/" target="_blank" class="tool-link" style="display: inline-flex; align-items: center; color: #3b82f6; font-weight: 500; text-decoration: none; transition: color 0.2s ease;">
                     {% if current_lang == 'tr' %}
-                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                        Detaylı Bilgi <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% else %}
-                        Detailed Information <i class="fas fa-arrow-right"></i>
+                        Detailed Information <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                     {% endif %}
                 </a>
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="{{ url_for('araclar') }}" class="btn btn-primary">
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="{{ url_for('araclar') }}" class="btn btn-primary" style="padding: 0.8rem 2rem; font-weight: 500; transition: all 0.3s ease; border-radius: 6px;">
                 {% if current_lang == 'tr' %}
                     Tüm Araçları Gör
                 {% else %}
@@ -526,23 +533,23 @@
     </div>
 </section>
 
-<section class="cta">
+<section class="cta" style="padding: 5rem 0; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center;">
     <div class="container">
-        <h2>
+        <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.2);">
             {% if current_lang == 'tr' %}
                 Test Süreçlerinizi Geliştirmeye Hazır mısınız?
             {% else %}
                 Are You Ready to Improve Your Testing Processes?
             {% endif %}
         </h2>
-        <p>
+        <p style="font-size: 1.2rem; margin-bottom: 2.5rem; max-width: 800px; margin-left: auto; margin-right: auto; opacity: 0.9;">
             {% if current_lang == 'tr' %}
                 SotecAI'nin kapsamlı kaynaklarından yararlanmak, güncel bilgilere erişmek ve test topluluğumuzun bir parçası olmak için hemen üye olun.
             {% else %}
                 Sign up now to take advantage of SotecAI's comprehensive resources, access up-to-date information, and become part of our testing community.
             {% endif %}
         </p>
-        <a href="{{ url_for('kayit') }}" class="btn btn-outline">
+        <a href="{{ url_for('kayit') }}" class="btn btn-outline" style="padding: 1rem 2.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid white; color: white; background: transparent; border-radius: 8px; transition: all 0.3s ease;">
             {% if current_lang == 'tr' %}
                 Hemen Üye Olun
             {% else %}
@@ -551,4 +558,48 @@
         </a>
     </div>
 </section>
+
+<style>
+    /* Animations and hover effects */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+    
+    .tool-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .video-wrapper:hover {
+        transform: translateY(-5px);
+    }
+    
+    .tool-link:hover {
+        color: #1e40af;
+    }
+    
+    .blog-title a:hover {
+        color: #2563eb;
+    }
+    
+    .btn-outline:hover {
+        background: rgba(255,255,255,0.1);
+    }
+    
+    .category-filter:not(.active):hover {
+        background-color: #cbd5e1;
+    }
+</style>
 {% endblock %}

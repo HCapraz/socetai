@@ -203,37 +203,53 @@
                 {% endif %}
                 <span style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 70px; height: 4px; background-color: #3b82f6; border-radius: 2px;"></span>
             </h2>
-            <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem; color: #64748b;">
-                {% if current_lang == 'tr' %}
-                    Uzman ekibimiz, yazılım test dünyasındaki deneyimlerini sizlerle paylaşıyor.
-                {% else %}
-                    Our expert team shares their experiences in the software testing world with you.
-                {% endif %}
-            </p>
+<p style="max-width: 650px; margin: 0 auto 0px; font-size: 1.1rem; color: #64748b;">
+    {% if current_lang == 'tr' %}
+        Uzman ekibimiz, yazılım test dünyasındaki deneyimlerini sizlerle paylaşıyor.
+    {% else %}
+        Our expert team shares their experiences in the software testing world with you.
+    {% endif %}
+</p>
         </div>
         
         <!-- Team Members -->
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="team-card" style="text-align: center; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;">
-                <div style="height: 250px; background-color: #dbeafe; position: relative;">
-                    <img src="{{ url_for('static', filename='images/team1.jpg') }}" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div style="padding: 1.5rem;">
-                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Hikmet CAPRAZ</h3>
-                    <p style="color: #3b82f6; margin-bottom: 1rem; font-weight: 500;">
-                        {% if current_lang == 'tr' %}
-                            Kurucu & CTO
-                        {% else %}
-                            Founder & CTO
-                        {% endif %}
-                    </p>
-                    <p style="color: #64748b; font-size: 0.95rem;">
-                        {% if current_lang == 'tr' %}
-                            10+ yıllık test otomasyonu ve kalite güvence deneyimi
-                        {% else %}
-                            10+ years of experience in test automation and quality assurance
-                        {% endif %}
-                    </p>
+<div style="background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fd 50%, #dbeafe 100%); border-radius: 16px; padding: 30px; box-shadow: 0 6px 20px rgba(59, 130, 246, 0.1); margin-bottom: 30px; text-align: center;">
+    <!-- Image container with improved styling -->
+    <div style="margin: 0 auto 25px; max-width: 350px;">
+        <img src="{{ url_for('static', filename='images/team1.jpg') }}" alt="Hikmet CAPRAZ" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 6px 15px rgba(0,0,0,0.08);">
+    </div>
+    
+    <!-- Name with enhanced styling -->
+    <h3 style="font-size: 1.8rem; font-weight: 700; color: #1e3a8a; margin-bottom: 8px;">Hikmet CAPRAZ</h3>
+    
+    <!-- Title with branded color -->
+<p style="color: #3b82f6; font-size: 1.2rem; font-weight: 600; margin-bottom: 15px;">
+    {% if current_lang == 'tr' %}
+        Kurucu & CTO
+    {% else %}
+        Founder & CTO
+    {% endif %}
+</p>
+
+<!-- Experience description -->
+<p style="color: #4b5563; font-size: 1.05rem; margin-bottom: 20px; line-height: 1.6;">
+    {% if current_lang == 'tr' %}
+        10+ yıllık test otomasyonu ve kalite güvence deneyimi
+    {% else %}
+        10+ years of experience in test automation and quality assurance
+    {% endif %}
+</p>
+    
+    <!-- Social media icons with improved styling -->
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
+        <a href="#" style="color: #6b7280; font-size: 1.25rem; transition: color 0.2s ease-in-out;"><i class="fab fa-linkedin"></i></a>
+        <a href="#" style="color: #6b7280; font-size: 1.25rem; transition: color 0.2s ease-in-out;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color: #6b7280; font-size: 1.25rem; transition: color 0.2s ease-in-out;"><i class="fab fa-github"></i></a>
+    </div>
+</div>
+
                     <div class="social-links" style="margin-top: 1rem;">
                         <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-linkedin"></i></a>
                         <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-twitter"></i></a>
@@ -249,7 +265,7 @@
                     <img src="{{ url_for('static', filename='images/team2.jpg') }}" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div style="padding: 1.5rem;">
-                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Zeynep Kaya</h3>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Betül SELEN</h3>
                     <p style="color: #3b82f6; margin-bottom: 1rem; font-weight: 500;">
                         {% if current_lang == 'tr' %}
                             Test Otomasyonu Uzmanı
@@ -279,7 +295,7 @@
                     <img src="{{ url_for('static', filename='images/team3.jpg') }}" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div style="padding: 1.5rem;">
-                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Murat Demir</h3>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Farida NEWBORN</h3>
                     <p style="color: #3b82f6; margin-bottom: 1rem; font-weight: 500;">
                         {% if current_lang == 'tr' %}
                             Performans Test Mühendisi
@@ -304,68 +320,98 @@
         </div>
     </div>
     
-    <!-- Statistics Section -->
-    <div class="statistics-section" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; padding: 3rem 2rem; margin-bottom: 4rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+<!-- Enhanced Statistics Section with Blue Borders -->
+<div class="statistics-section" style="background: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 100%); border-radius: 16px; padding: 3.5rem 2rem; margin: 5rem 0; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.12); position: relative; overflow: hidden;">
+    <!-- Decorative elements -->
+    <div style="position: absolute; top: -20px; right: -20px; width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.15)); z-index: 1;"></div>
+    <div style="position: absolute; bottom: -30px; left: -30px; width: 180px; height: 180px; border-radius: 50%; background: linear-gradient(45deg, rgba(59, 130, 246, 0.08), rgba(37, 99, 235, 0.12)); z-index: 1;"></div>
+    
+    <div class="container position-relative" style="z-index: 2;">
         <div class="row text-center">
-            <div class="col-lg-12 mb-4">
-                <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">
+            <div class="col-lg-12 mb-5">
+                <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; color: #1e3a8a; position: relative; display: inline-block; padding-bottom: 15px;">
                     {% if current_lang == 'tr' %}
                         Rakamlarla SotecAI
                     {% else %}
                         SotecAI in Numbers
                     {% endif %}
+                    <span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, #3b82f6, #2563eb);"></span>
                 </h2>
             </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-item">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">5000+</div>
-                    <p style="color: #64748b; font-weight: 500;">
-                        {% if current_lang == 'tr' %}
-                            Toplam Kullanıcı
-                        {% else %}
-                            Total Users
-                        {% endif %}
-                    </p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item" style="padding: 1.5rem; border-radius: 12px; background: linear-gradient(135deg, #f0f7ff 0%, #dbeafe 100%); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08); border: 2px solid #2563eb;">
+                        <div style="font-size: 2.8rem; font-weight: 800; color: #2563eb; margin-bottom: 0.8rem; text-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);">5000+</div>
+                        <p style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0;">
+                            {% if current_lang == 'tr' %}
+                                Toplam Kullanıcı
+                            {% else %}
+                                Total Users
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-item">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">100+</div>
-                    <p style="color: #64748b; font-weight: 500;">
-                        {% if current_lang == 'tr' %}
-                            Blog Yazısı
-                        {% else %}
-                            Blog Articles
-                        {% endif %}
-                    </p>
+                
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item" style="padding: 1.5rem; border-radius: 12px; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08); border: 2px solid #2563eb;">
+                        <div style="font-size: 2.8rem; font-weight: 800; color: #2563eb; margin-bottom: 0.8rem; text-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);">100+</div>
+                        <p style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0;">
+                            {% if current_lang == 'tr' %}
+                                Blog Yazısı
+                            {% else %}
+                                Blog Articles
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-item">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">50+</div>
-                    <p style="color: #64748b; font-weight: 500;">
-                        {% if current_lang == 'tr' %}
-                            Test Aracı
-                        {% else %}
-                            Testing Tools
-                        {% endif %}
-                    </p>
+                
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item" style="padding: 1.5rem; border-radius: 12px; background: linear-gradient(135deg, #f1f5f9 0%, #dbeafe 100%); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08); border: 2px solid #2563eb;">
+                        <div style="font-size: 2.8rem; font-weight: 800; color: #2563eb; margin-bottom: 0.8rem; text-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);">50+</div>
+                        <p style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0;">
+                            {% if current_lang == 'tr' %}
+                                Test Aracı
+                            {% else %}
+                                Testing Tools
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="stat-item">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">10+</div>
-                    <p style="color: #64748b; font-weight: 500;">
-                        {% if current_lang == 'tr' %}
-                            Yıllık Deneyim
-                        {% else %}
-                            Years of Experience
-                        {% endif %}
-                    </p>
+                
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="stat-item" style="padding: 1.5rem; border-radius: 12px; background: linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08); border: 2px solid #2563eb;">
+                        <div style="font-size: 2.8rem; font-weight: 800; color: #2563eb; margin-bottom: 0.8rem; text-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);">10+</div>
+                        <p style="color: #475569; font-weight: 600; font-size: 1.05rem; margin-bottom: 0;">
+                            {% if current_lang == 'tr' %}
+                                Yıllık Deneyim
+                            {% else %}
+                                Years of Experience
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Add custom hover effects -->
+<style>
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15) !important;
+        border-color: #1e40af !important; /* Darker blue on hover */
+    }
+</style>
+
+<!-- Add custom hover effects -->
+<style>
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15) !important;
+    }
+</style>
     
     <!-- CTA Section -->
     <div class="cta-section" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 16px; padding: 3rem; text-align: center; color: white; margin-bottom: 2rem;">
@@ -383,13 +429,13 @@
                 Sign up to improve your software testing processes, access up-to-date information, and become part of our testing community.
             {% endif %}
         </p>
-        <a href="{{ url_for('kayit') }}" class="btn btn-light btn-lg" style="padding: 0.75rem 2rem; font-weight: 600; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-            {% if current_lang == 'tr' %}
-                Ücretsiz Üye Olun
-            {% else %}
-                Sign Up for Free
-            {% endif %}
-        </a>
+  <a href="{{ url_for('kayit') }}" class="btn btn-lg" style="padding: 0.75rem 2.5rem; font-weight: 600; border-radius: 50px; background-color: #ffffff; color: #1e3a8a; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; font-size: 1.1rem; border: 2px solid #ffffff;">
+        {% if current_lang == 'tr' %}
+            Ücretsiz Üye Olun
+        {% else %}
+            Sign Up for Free
+        {% endif %}
+    </a>
     </div>
 </div>
 
