@@ -1,47 +1,108 @@
 {% extends 'base.html' %}
 
-{% block title %}Üye Ol - SotecAI{% endblock %}
+{% block title %}
+    {% set current_lang = session.get('lang', 'tr') %}
+    {% if current_lang == 'tr' %}
+        Üye Ol - SotecAI
+    {% else %}
+        Sign Up - SotecAI
+    {% endif %}
+{% endblock %}
 
 {% block content %}
+{% set current_lang = session.get('lang', 'tr') %}
+
 <div class="page-header-dark" style="min-height: 100vh; display: flex; align-items: center; margin-bottom: 0;">
     <div class="container">
         <div class="auth-container" style="background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 2.5rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); max-width: 500px; margin: 0 auto;">
             <div class="auth-header">
-                <h2 style="color: white; margin-bottom: 1rem;">Üye Ol</h2>
-                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">SotecAI'ye üye olarak test dünyasındaki kaynaklara erişin.</p>
+                <h2 style="color: white; margin-bottom: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        Üye Ol
+                    {% else %}
+                        Sign Up
+                    {% endif %}
+                </h2>
+                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">
+                    {% if current_lang == 'tr' %}
+                        SotecAI'ye üye olarak test dünyasındaki kaynaklara erişin.
+                    {% else %}
+                        Join SotecAI to access resources in the testing world.
+                    {% endif %}
+                </p>
             </div>
             
             <form action="{{ url_for('kayit') }}" method="POST">
                 <div class="form-group">
-                    <label for="ad" class="form-label" style="color: white;">Adınız</label>
+                    <label for="ad" class="form-label" style="color: white;">
+                        {% if current_lang == 'tr' %}
+                            Adınız
+                        {% else %}
+                            First Name
+                        {% endif %}
+                    </label>
                     <input type="text" id="ad" name="ad" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="soyad" class="form-label" style="color: white;">Soyadınız</label>
+                    <label for="soyad" class="form-label" style="color: white;">
+                        {% if current_lang == 'tr' %}
+                            Soyadınız
+                        {% else %}
+                            Last Name
+                        {% endif %}
+                    </label>
                     <input type="text" id="soyad" name="soyad" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="email" class="form-label" style="color: white;">E-posta Adresiniz</label>
+                    <label for="email" class="form-label" style="color: white;">
+                        {% if current_lang == 'tr' %}
+                            E-posta Adresiniz
+                        {% else %}
+                            Your Email Address
+                        {% endif %}
+                    </label>
                     <input type="email" id="email" name="email" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="parola" class="form-label" style="color: white;">Parolanız</label>
+                    <label for="parola" class="form-label" style="color: white;">
+                        {% if current_lang == 'tr' %}
+                            Parolanız
+                        {% else %}
+                            Your Password
+                        {% endif %}
+                    </label>
                     <input type="password" id="parola" name="parola" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="parola_tekrar" class="form-label" style="color: white;">Parola Tekrar</label>
+                    <label for="parola_tekrar" class="form-label" style="color: white;">
+                        {% if current_lang == 'tr' %}
+                            Parola Tekrar
+                        {% else %}
+                            Confirm Password
+                        {% endif %}
+                    </label>
                     <input type="password" id="parola_tekrar" name="parola_tekrar" class="form-control" style="background-color: rgba(255, 255, 255, 0.9); border: none;" required>
                 </div>
                 
-                <button type="submit" class="btn btn-primary" style="width: 100%; background: linear-gradient(to right, #3b82f6, #2563eb); border: none; padding: 0.75rem; font-weight: 600; margin-top: 1rem;">Üye Ol</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; background: linear-gradient(to right, #3b82f6, #2563eb); border: none; padding: 0.75rem; font-weight: 600; margin-top: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        Üye Ol
+                    {% else %}
+                        Sign Up
+                    {% endif %}
+                </button>
             </form>
             
             <div class="auth-footer" style="margin-top: 2rem; text-align: center; color: white;">
-                Zaten hesabınız var mı? <a href="{{ url_for('giris') }}" style="color: #93c5fd; font-weight: 600;">Giriş Yapın</a>
+                {% if current_lang == 'tr' %}
+                    Zaten hesabınız var mı? <a href="{{ url_for('giris') }}" style="color: #93c5fd; font-weight: 600;">Giriş Yapın</a>
+                {% else %}
+                    Already have an account? <a href="{{ url_for('giris') }}" style="color: #93c5fd; font-weight: 600;">Login</a>
+                {% endif %}
             </div>
         </div>
     </div>

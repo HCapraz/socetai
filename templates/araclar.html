@@ -1,20 +1,60 @@
 {% extends 'base.html' %}
 
-{% block title %}Test Araçları - SotecAI{% endblock %}
+{% block title %}
+    {% set current_lang = session.get('lang', 'tr') %}
+    {% if current_lang == 'tr' %}
+        Test Araçları - SotecAI
+    {% else %}
+        Testing Tools - SotecAI
+    {% endif %}
+{% endblock %}
 
 {% block content %}
+{% set current_lang = session.get('lang', 'tr') %}
+
 <div class="page-header-dark">
     <div class="container">
-        <h1>Popüler Test Araçları</h1>
-        <p>Yazılım test süreçlerinizde kullanabileceğiniz modern ve etkili araçları keşfedin.</p>
+        <h1>
+            {% if current_lang == 'tr' %}
+                Popüler Test Araçları
+            {% else %}
+                Popular Testing Tools
+            {% endif %}
+        </h1>
+        <p>
+            {% if current_lang == 'tr' %}
+                Yazılım test süreçlerinizde kullanabileceğiniz modern ve etkili araçları keşfedin.
+            {% else %}
+                Discover modern and effective tools you can use in your software testing processes.
+            {% endif %}
+        </p>
     </div>
 </div>
 
 <div class="container">
     <div class="category-filters">
-        <button class="category-filter active" data-category="all">Tümü</button>
+        <button class="category-filter active" data-category="all">
+            {% if current_lang == 'tr' %}
+                Tümü
+            {% else %}
+                All
+            {% endif %}
+        </button>
         {% for kategori in kategoriler %}
-        <button class="category-filter" data-category="{{ kategori }}">{{ kategori }}</button>
+        <button class="category-filter" data-category="{{ kategori }}">
+            {% if current_lang == 'tr' %}
+                {{ kategori }}
+            {% else %}
+                {% if kategori == 'Web Otomasyon' %}Web Automation
+                {% elif kategori == 'Performans Testi' %}Performance Testing
+                {% elif kategori == 'API Testi' %}API Testing
+                {% elif kategori == 'Mobil Test' %}Mobile Testing
+                {% elif kategori == 'Test Framework' %}Test Framework
+                {% elif kategori == 'Kod Kalitesi' %}Code Quality
+                {% elif kategori == 'BDD' %}BDD
+                {% else %}{{ kategori }}{% endif %}
+            {% endif %}
+        </button>
         {% endfor %}
     </div>
     
@@ -27,13 +67,100 @@
                 </div>
                 <div>
                     <div class="tool-name">{{ arac.ad }}</div>
-                    <div class="tool-category">{{ arac.kategori }}</div>
+                    <div class="tool-category">
+                        {% if current_lang == 'tr' %}
+                            {{ arac.kategori }}
+                        {% else %}
+                            {% if arac.kategori == 'Web Otomasyon' %}Web Automation
+                            {% elif arac.kategori == 'Performans Testi' %}Performance Testing
+                            {% elif arac.kategori == 'API Testi' %}API Testing
+                            {% elif arac.kategori == 'Mobil Test' %}Mobile Testing
+                            {% elif arac.kategori == 'Test Framework' %}Test Framework
+                            {% elif arac.kategori == 'Kod Kalitesi' %}Code Quality
+                            {% elif arac.kategori == 'BDD' %}BDD
+                            {% else %}{{ arac.kategori }}{% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="tool-description">
-                {{ arac.aciklama }}
+                {% if current_lang == 'tr' %}
+                    {{ arac.aciklama }}
+                {% else %}
+                    {% if 'Selenium' in arac.ad %}
+                        An open-source and powerful automation tool for testing web applications. It can be used with many programming languages.
+                    {% elif 'JMeter' in arac.ad %}
+                        Apache JMeter is an open-source Java application used for performance and load testing of web applications.
+                    {% elif 'Postman' in arac.ad %}
+                        A popular tool for API development and testing. It offers the ability to create, automate, and share API requests.
+                    {% elif 'Appium' in arac.ad %}
+                        An open-source test automation tool for mobile applications (iOS, Android). It uses the Web Driver protocol.
+                    {% elif 'Cypress' in arac.ad %}
+                        A next-generation front-end testing tool built for the modern web. Fast, easy, and reliable testing for anything that runs in a browser.
+                    {% elif 'Cucumber' in arac.ad %}
+                        A tool that supports Behavior-Driven Development (BDD), allowing specifications to be written in a language that non-programmers can understand.
+                    {% elif 'SoapUI' in arac.ad %}
+                        An open-source web service testing application for SOAP and REST APIs. It provides comprehensive test coverage and easy-to-use GUI.
+                    {% elif 'TestNG' in arac.ad %}
+                        A testing framework inspired by JUnit and NUnit but introducing new functionalities that make it more powerful and easier to use.
+                    {% elif 'Jest' in arac.ad %}
+                        A delightful JavaScript testing framework with a focus on simplicity. Works with projects using Babel, TypeScript, Node.js, React, and more.
+                    {% elif 'Gatling' in arac.ad %}
+                        An open-source load and performance testing framework based on Scala, Akka, and Netty. It's designed for continuous load testing.
+                    {% elif 'PyTest' in arac.ad %}
+                        A mature full-featured Python testing tool that helps you write better programs. Simple and scalable for both small and complex testing needs.
+                    {% elif 'Robot Framework' in arac.ad %}
+                        A generic open-source automation framework for acceptance testing, acceptance test-driven development, and robotic process automation.
+                    {% elif 'Playwright' in arac.ad %}
+                        A Node.js library to automate Chromium, Firefox and WebKit with a single API. It enables cross-browser web automation that is reliable and fast.
+                    {% elif 'WebdriverIO' in arac.ad %}
+                        A next-gen testing framework for Node.js that enables web and mobile testing in an easy-to-use way. Designed for high concurrency.
+                    {% elif 'Katalon' in arac.ad %}
+                        A powerful automation solution that accelerates web, API, mobile, and desktop testing for teams of all sizes, with minimal coding required.
+                    {% elif 'Sonar' in arac.ad %}
+                        A platform for continuous inspection of code quality to perform automatic reviews with static analysis to detect bugs and code smells.
+                    {% elif 'Espresso' in arac.ad %}
+                        A testing framework for Android that makes it easy to write reliable UI tests. It provides APIs for simulating user interactions with your app.
+                    {% elif 'Micro Focus UFT' in arac.ad %}
+                        An automated functional testing tool that helps testers automate tests for software applications, focusing on enterprise solutions.
+                    {% elif 'Ranorex' in arac.ad %}
+                        A comprehensive UI test automation framework for desktop, web, and mobile applications, offering codeless test creation and execution.
+                    {% elif 'LoadRunner' in arac.ad %}
+                        A software testing tool that helps analyze system behavior and performance under load. It can simulate thousands of users concurrently.
+                    {% elif 'Tosca' in arac.ad %}
+                        A continuous testing platform that accelerates testing with a scriptless approach for end-to-end test automation across various applications.
+                    {% elif 'XCTest' in arac.ad %}
+                        Apple's native testing framework for iOS, iPadOS, and macOS applications, integrated with Xcode for UI and unit testing.
+                    {% elif 'Mockito' in arac.ad %}
+                        A mocking framework for Java that simplifies the development of tests by mocking external dependencies and verifying interactions.
+                    {% elif 'NUnit' in arac.ad %}
+                        A unit-testing framework for .NET languages. It is the .NET port of the JUnit framework and is part of the xUnit family.
+                    {% elif 'JUnit' in arac.ad %}
+                        A simple framework to write repeatable tests for Java. It is an instance of the xUnit architecture for unit testing frameworks.
+                    {% elif 'Mocha' in arac.ad %}
+                        A feature-rich JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun.
+                    {% elif 'Jasmine' in arac.ad %}
+                        A behavior-driven development framework for testing JavaScript code that does not depend on any other JavaScript frameworks.
+                    {% elif 'Protractor' in arac.ad %}
+                        An end-to-end testing framework for Angular and AngularJS applications. It runs tests against your application in a real browser.
+                    {% elif 'WebDriver' in arac.ad %}
+                        A remote control interface that enables introspection and control of user agents. It provides a platform and language-neutral wire protocol.
+                    {% elif 'Serenity BDD' in arac.ad %}
+                        An open-source library that helps you write better-structured and more maintainable automated acceptance tests for your web applications.
+                    {% elif 'SpecFlow' in arac.ad %}
+                        An open-source .NET acceptance testing tool that enables developers to define, manage, and execute automated acceptance tests using Gherkin syntax.
+                    {% else %}
+                        {{ arac.aciklama }}
+                    {% endif %}
+                {% endif %}
             </div>
-            <a href="{{ arac.link }}" target="_blank" class="tool-link">Resmi Siteyi Ziyaret Et <i class="fas fa-arrow-right"></i></a>
+            <a href="{{ arac.link }}" target="_blank" class="tool-link">
+                {% if current_lang == 'tr' %}
+                    Resmi Siteyi Ziyaret Et <i class="fas fa-arrow-right"></i>
+                {% else %}
+                    Visit Official Website <i class="fas fa-arrow-right"></i>
+                {% endif %}
+            </a>
         </div>
         {% endfor %}
     </div>

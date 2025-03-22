@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    {% set current_lang = session.get('lang', 'tr') %}
+    {% if current_lang == 'tr' %}
+        SotecAI - Ana Sayfa
+    {% else %}
+        SotecAI - Home Page
+    {% endif %}
+{% endblock %}
+
 {% block content %}
+{% set current_lang = session.get('lang', 'tr') %}
+
 <section class="hero" style="position: relative; overflow: hidden; padding: 6rem 0;">
     <!-- Arka plan görseli (mevcut kod görseli) ile karıştırılmış bir renk geçişi -->
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(23, 37, 84, 0.85) 0%, rgba(30, 58, 138, 0.75) 100%); z-index: 1;"></div>
@@ -11,13 +22,30 @@
     <div class="container" style="position: relative; z-index: 3;">
         <div class="row align-items-center">
             <div class="col-lg-7">
-                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Yazılım Test Dünyasına Hoş Geldiniz</h1>
-                <p style="font-size: 1.25rem; margin-bottom: 2.5rem; color: rgba(255,255,255,0.9); text-shadow: 0 1px 5px rgba(0,0,0,0.2); max-width: 600px;">SotecAI, modern yazılım test süreçleri için kapsamlı kaynaklar sunan yenilikçi bir platformdur. Test otomasyonu, performans ve güvenlik testlerinde bir adım öne çıkın.</p>
+                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+                    {% if current_lang == 'tr' %}
+                        Yazılım Test Dünyasına Hoş Geldiniz
+                    {% else %}
+                        Welcome to the Software Testing World
+                    {% endif %}
+                </h1>
+                <p style="font-size: 1.25rem; margin-bottom: 2.5rem; color: rgba(255,255,255,0.9); text-shadow: 0 1px 5px rgba(0,0,0,0.2); max-width: 600px;">
+                    {% if current_lang == 'tr' %}
+                        SotecAI, modern yazılım test süreçleri için kapsamlı kaynaklar sunan yenilikçi bir platformdur. Test otomasyonu, performans ve güvenlik testlerinde bir adım öne çıkın.
+                    {% else %}
+                        SotecAI is an innovative platform that provides comprehensive resources for modern software testing processes. Stay ahead in test automation, performance and security testing.
+                    {% endif %}
+                </p>
                 
                 <!-- Modern butonlar -->
-                <div>
-                    <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-right: 1rem; background: linear-gradient(to right, #3b82f6, #2563eb); border: none; transition: all 0.3s;">Blog Yazılarımız</a>
-                    <a href="{{ url_for('araclar') }}" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid white; background: transparent; color: white; transition: all 0.3s;">Test Araçları</a>
+                <div class="cta-container">
+                    <a href="{{ url_for('hakkimizda') }}" class="btn btn-cta">
+                        {% if current_lang == 'tr' %}
+                            Hadi Başlayalım!
+                        {% else %}
+                            Let's Get Started!
+                        {% endif %}
+                    </a>
                 </div>
             </div>
             
@@ -29,11 +57,70 @@
     </div>
 </section>
 
+<section class="video-section" style="padding: 4rem 0; background-color: #dbeafe;">
+    <div class="container">
+        <div class="section-title">
+            <h2>
+                {% if current_lang == 'tr' %}
+                    Neden Yazılım Testi?
+                {% else %}
+                    Why Software Testing?
+                {% endif %}
+            </h2>
+            <p>
+                {% if current_lang == 'tr' %}
+                    Yazılım test süreçlerini daha iyi anlamanız için uzman içeriklerimizi izleyin.
+                {% else %}
+                    Watch our expert content to better understand software testing processes.
+                {% endif %}
+            </p>
+        </div>
+        
+        <div class="video-container">
+            <!-- İlk Video -->
+            <div class="video-wrapper">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/0tSGZabYVYY?si=3zfSDuku_ggafVvp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        SDET nedir ve ne yapar?
+                    {% else %}
+                        What is an SDET and what do they do?
+                    {% endif %}
+                </h3>
+            </div>
+            
+            <!-- İkinci Video -->
+            <div class="video-wrapper">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/nhmQrjyVwlc?si=6YAhmOL4bMqlHL6-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        Yazılım Testi Nedir, Yazılım Test Uzmanı kimdir ve ne yapar?
+                    {% else %}
+                        What is Software Testing, who is a Software Test Engineer and what do they do?
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="features">
     <div class="container">
         <div class="section-title">
-            <h2>Yazılım Test Uzmanlık Alanlarımız</h2>
-            <p>SotecAI olarak yazılım test süreçlerinin her aşamasında uzmanlaşmış bilgi ve kaynaklarımızla size rehberlik ediyoruz.</p>
+            <h2>
+                {% if current_lang == 'tr' %}
+                    Yazılım Test Uzmanlık Alanlarımız
+                {% else %}
+                    Our Software Testing Expertise Areas
+                {% endif %}
+            </h2>
+            <p>
+                {% if current_lang == 'tr' %}
+                    SotecAI olarak yazılım test süreçlerinin her aşamasında uzmanlaşmış bilgi ve kaynaklarımızla size rehberlik ediyoruz.
+                {% else %}
+                    As SotecAI, we guide you with our specialized knowledge and resources at every stage of software testing processes.
+                {% endif %}
+            </p>
         </div>
         
         <div class="features-grid">
@@ -41,48 +128,120 @@
                 <div class="feature-icon">
                     <i class="fas fa-robot"></i>
                 </div>
-                <h3>Test Otomasyonu</h3>
-                <p>Selenium, Appium, Cypress gibi popüler araçlarla web ve mobil uygulamalarınız için kapsamlı test otomasyonu çözümleri.</p>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        Test Otomasyonu
+                    {% else %}
+                        Test Automation
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if current_lang == 'tr' %}
+                        Selenium, Appium, Cypress gibi popüler araçlarla web ve mobil uygulamalarınız için kapsamlı test otomasyonu çözümleri.
+                    {% else %}
+                        Comprehensive test automation solutions for your web and mobile applications with popular tools like Selenium, Appium, and Cypress.
+                    {% endif %}
+                </p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-tachometer-alt"></i>
                 </div>
-                <h3>Performans Testleri</h3>
-                <p>JMeter, Gatling ve LoadRunner ile uygulamanızın yük altındaki performansını ölçün ve darboğazları tespit edin.</p>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        Performans Testleri
+                    {% else %}
+                        Performance Testing
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if current_lang == 'tr' %}
+                        JMeter, Gatling ve LoadRunner ile uygulamanızın yük altındaki performansını ölçün ve darboğazları tespit edin.
+                    {% else %}
+                        Measure your application's performance under load and identify bottlenecks with JMeter, Gatling, and LoadRunner.
+                    {% endif %}
+                </p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <h3>Güvenlik Testleri</h3>
-                <p>OWASP standartlarına uygun güvenlik testleri ile uygulamanızı güvenlik açıklarına karşı koruyun.</p>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        Güvenlik Testleri
+                    {% else %}
+                        Security Testing
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if current_lang == 'tr' %}
+                        OWASP standartlarına uygun güvenlik testleri ile uygulamanızı güvenlik açıklarına karşı koruyun.
+                    {% else %}
+                        Protect your application against security vulnerabilities with security tests compliant with OWASP standards.
+                    {% endif %}
+                </p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
-                <h3>Mobil Test</h3>
-                <p>iOS ve Android platformlarında manuel ve otomatize test süreçleri ile mobil uygulamanızın kalitesini artırın.</p>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        Mobil Test
+                    {% else %}
+                        Mobile Testing
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if current_lang == 'tr' %}
+                        iOS ve Android platformlarında manuel ve otomatize test süreçleri ile mobil uygulamanızın kalitesini artırın.
+                    {% else %}
+                        Enhance the quality of your mobile application with manual and automated testing processes on iOS and Android platforms.
+                    {% endif %}
+                </p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-code"></i>
                 </div>
-                <h3>API Testleri</h3>
-                <p>Postman, SoapUI ve RestAssured ile servislerinizin doğru çalıştığından emin olun.</p>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        API Testleri
+                    {% else %}
+                        API Testing
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if current_lang == 'tr' %}
+                        Postman, SoapUI ve RestAssured ile servislerinizin doğru çalıştığından emin olun.
+                    {% else %}
+                        Ensure your services are working correctly with Postman, SoapUI, and RestAssured.
+                    {% endif %}
+                </p>
             </div>
             
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-sitemap"></i>
                 </div>
-                <h3>Test Stratejisi</h3>
-                <p>İhtiyaçlarınıza özel, kapsamlı test stratejileri ile yazılım kalite süreçlerinizi optimize edin.</p>
+                <h3>
+                    {% if current_lang == 'tr' %}
+                        Test Stratejisi
+                    {% else %}
+                        Test Strategy
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if current_lang == 'tr' %}
+                        İhtiyaçlarınıza özel, kapsamlı test stratejileri ile yazılım kalite süreçlerinizi optimize edin.
+                    {% else %}
+                        Optimize your software quality processes with comprehensive test strategies tailored to your needs.
+                    {% endif %}
+                </p>
             </div>
         </div>
     </div>
@@ -91,8 +250,20 @@
 <section class="latest-posts">
     <div class="container">
         <div class="section-title">
-            <h2>Son Blog Yazıları</h2>
-            <p>Yazılım test dünyasındaki son gelişmeler, iyi uygulamalar ve ipuçları hakkında bilgi edinin.</p>
+            <h2>
+                {% if current_lang == 'tr' %}
+                    Son Blog Yazıları
+                {% else %}
+                    Latest Blog Posts
+                {% endif %}
+            </h2>
+            <p>
+                {% if current_lang == 'tr' %}
+                    Yazılım test dünyasındaki son gelişmeler, iyi uygulamalar ve ipuçları hakkında bilgi edinin.
+                {% else %}
+                    Learn about the latest developments, best practices, and tips in the software testing world.
+                {% endif %}
+            </p>
         </div>
         
         <div class="blog-cards">
@@ -111,16 +282,62 @@
                 {% endif %}
                 <div class="blog-content">
                     <div class="blog-date">{{ blog.tarih.strftime('%d.%m.%Y') }}</div>
-                    <h3 class="blog-title"><a href="{{ url_for('blog_detay', blog_id=blog.id) }}">{{ blog.baslik }}</a></h3>
-                    <p class="blog-excerpt">{{ blog.ozet }}</p>
-                    <a href="{{ url_for('blog_detay', blog_id=blog.id) }}" class="btn btn-primary">Devamını Oku</a>
+                    <h3 class="blog-title">
+                        <a href="{{ url_for('blog_detay', blog_id=blog.id) }}">
+                            {% if current_lang == 'tr' %}
+                                {{ blog.baslik }}
+                            {% else %}
+                                {% if "Trendler" in blog.baslik %}
+                                    Latest Trends in Test Automation
+                                {% elif "API Testi" in blog.baslik %}
+                                    How to Perform Effective API Testing?
+                                {% elif "Veri Yönetimi" in blog.baslik %}
+                                    Test Data Management: Challenges and Solutions
+                                {% elif "Python" in blog.baslik %}
+                                    Python in Test Automation
+                                {% else %}
+                                    {{ blog.baslik }}
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </h3>
+                    <p class="blog-excerpt">
+                        {% if current_lang == 'tr' %}
+                            {{ blog.ozet }}
+                        {% else %}
+                            {% if "Trendler" in blog.baslik %}
+                                A comprehensive review of emerging technologies and approaches in software test automation.
+                            {% elif "API Testi" in blog.baslik %}
+                                A comprehensive guide to testing APIs, which are the foundation of modern software architectures.
+                            {% elif "Veri Yönetimi" in blog.baslik %}
+                                Practical tips on managing and creating the right data for effective testing.
+                            {% elif "Python" in blog.baslik %}
+                                Learn how Python can enhance your test automation efforts with practical examples.
+                            {% else %}
+                                {{ blog.ozet }}
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                    <a href="{{ url_for('blog_detay', blog_id=blog.id) }}" class="btn btn-primary">
+                        {% if current_lang == 'tr' %}
+                            Devamını Oku
+                        {% else %}
+                            Read More
+                        {% endif %}
+                    </a>
                 </div>
             </div>
             {% endfor %}
         </div>
         
         <div style="text-align: center; margin-top: 2rem;">
-            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary">Tüm Blog Yazıları</a>
+            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary">
+                {% if current_lang == 'tr' %}
+                    Tüm Blog Yazıları
+                {% else %}
+                    All Blog Posts
+                {% endif %}
+            </a>
         </div>
     </div>
 </section>
@@ -128,14 +345,42 @@
 <section class="tools">
     <div class="container">
         <div class="section-title">
-            <h2>Popüler Test Araçları</h2>
-            <p>Yazılım test süreçlerinizde kullanabileceğiniz modern ve etkili araçları keşfedin.</p>
+            <h2>
+                {% if current_lang == 'tr' %}
+                    Popüler Test Araçları
+                {% else %}
+                    Popular Testing Tools
+                {% endif %}
+            </h2>
+            <p>
+                {% if current_lang == 'tr' %}
+                    Yazılım test süreçlerinizde kullanabileceğiniz modern ve etkili araçları keşfedin.
+                {% else %}
+                    Discover modern and effective tools you can use in your software testing processes.
+                {% endif %}
+            </p>
         </div>
         
         <div class="category-filters">
-            <button class="category-filter active" data-category="all">Tümü</button>
+            <button class="category-filter active" data-category="all">
+                {% if current_lang == 'tr' %}
+                    Tümü
+                {% else %}
+                    All
+                {% endif %}
+            </button>
             {% for kategori in kategoriler %}
-            <button class="category-filter" data-category="{{ kategori }}">{{ kategori }}</button>
+            <button class="category-filter" data-category="{{ kategori }}">
+                {% if current_lang == 'tr' %}
+                    {{ kategori }}
+                {% else %}
+                    {% if kategori == 'Web Otomasyon' %}Web Automation
+                    {% elif kategori == 'Performans Testi' %}Performance Testing
+                    {% elif kategori == 'API Testi' %}API Testing
+                    {% elif kategori == 'Mobil Test' %}Mobile Testing
+                    {% else %}{{ kategori }}{% endif %}
+                {% endif %}
+            </button>
             {% endfor %}
         </div>
         
@@ -147,13 +392,29 @@
                     </div>
                     <div>
                         <div class="tool-name">Selenium</div>
-                        <div class="tool-category">Web Otomasyon</div>
+                        <div class="tool-category">
+                            {% if current_lang == 'tr' %}
+                                Web Otomasyon
+                            {% else %}
+                                Web Automation
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="tool-description">
-                    Web uygulamalarını test etmek için açık kaynaklı ve güçlü bir otomasyon aracı. Birçok programlama dili ile kullanılabilir.
+                    {% if current_lang == 'tr' %}
+                        Web uygulamalarını test etmek için açık kaynaklı ve güçlü bir otomasyon aracı. Birçok programlama dili ile kullanılabilir.
+                    {% else %}
+                        An open-source and powerful automation tool for testing web applications. It can be used with many programming languages.
+                    {% endif %}
                 </div>
-                <a href="https://www.selenium.dev/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                <a href="https://www.selenium.dev/" target="_blank" class="tool-link">
+                    {% if current_lang == 'tr' %}
+                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                    {% else %}
+                        Detailed Information <i class="fas fa-arrow-right"></i>
+                    {% endif %}
+                </a>
             </div>
             
             <div class="tool-item" data-category="Performans Testi">
@@ -163,13 +424,29 @@
                     </div>
                     <div>
                         <div class="tool-name">JMeter</div>
-                        <div class="tool-category">Performans Testi</div>
+                        <div class="tool-category">
+                            {% if current_lang == 'tr' %}
+                                Performans Testi
+                            {% else %}
+                                Performance Testing
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="tool-description">
-                    Apache JMeter, web uygulamalarının performans ve yük testleri için kullanılan açık kaynaklı bir Java uygulamasıdır.
+                    {% if current_lang == 'tr' %}
+                        Apache JMeter, web uygulamalarının performans ve yük testleri için kullanılan açık kaynaklı bir Java uygulamasıdır.
+                    {% else %}
+                        Apache JMeter is an open-source Java application used for performance and load testing of web applications.
+                    {% endif %}
                 </div>
-                <a href="https://jmeter.apache.org/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                <a href="https://jmeter.apache.org/" target="_blank" class="tool-link">
+                    {% if current_lang == 'tr' %}
+                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                    {% else %}
+                        Detailed Information <i class="fas fa-arrow-right"></i>
+                    {% endif %}
+                </a>
             </div>
             
             <div class="tool-item" data-category="API Testi">
@@ -179,13 +456,29 @@
                     </div>
                     <div>
                         <div class="tool-name">Postman</div>
-                        <div class="tool-category">API Testi</div>
+                        <div class="tool-category">
+                            {% if current_lang == 'tr' %}
+                                API Testi
+                            {% else %}
+                                API Testing
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="tool-description">
-                    API geliştirme ve test etme için popüler bir araç. API istekleri oluşturma, otomatize etme ve paylaşma imkanı sunar.
+                    {% if current_lang == 'tr' %}
+                        API geliştirme ve test etme için popüler bir araç. API istekleri oluşturma, otomatize etme ve paylaşma imkanı sunar.
+                    {% else %}
+                        A popular tool for API development and testing. It offers the ability to create, automate, and share API requests.
+                    {% endif %}
                 </div>
-                <a href="https://www.postman.com/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                <a href="https://www.postman.com/" target="_blank" class="tool-link">
+                    {% if current_lang == 'tr' %}
+                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                    {% else %}
+                        Detailed Information <i class="fas fa-arrow-right"></i>
+                    {% endif %}
+                </a>
             </div>
             
             <div class="tool-item" data-category="Mobil Test">
@@ -195,27 +488,67 @@
                     </div>
                     <div>
                         <div class="tool-name">Appium</div>
-                        <div class="tool-category">Mobil Test</div>
+                        <div class="tool-category">
+                            {% if current_lang == 'tr' %}
+                                Mobil Test
+                            {% else %}
+                                Mobile Testing
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="tool-description">
-                    Mobil uygulamalar (iOS, Android) için açık kaynaklı bir test otomasyon aracı. Web Driver protokolünü kullanır.
+                    {% if current_lang == 'tr' %}
+                        Mobil uygulamalar (iOS, Android) için açık kaynaklı bir test otomasyon aracı. Web Driver protokolünü kullanır.
+                    {% else %}
+                        An open-source test automation tool for mobile applications (iOS, Android). It uses the Web Driver protocol.
+                    {% endif %}
                 </div>
-                <a href="https://appium.io/" target="_blank" class="tool-link">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                <a href="https://appium.io/" target="_blank" class="tool-link">
+                    {% if current_lang == 'tr' %}
+                        Detaylı Bilgi <i class="fas fa-arrow-right"></i>
+                    {% else %}
+                        Detailed Information <i class="fas fa-arrow-right"></i>
+                    {% endif %}
+                </a>
             </div>
         </div>
         
         <div style="text-align: center; margin-top: 2rem;">
-            <a href="{{ url_for('araclar') }}" class="btn btn-primary">Tüm Araçları Gör</a>
+            <a href="{{ url_for('araclar') }}" class="btn btn-primary">
+                {% if current_lang == 'tr' %}
+                    Tüm Araçları Gör
+                {% else %}
+                    See All Tools
+                {% endif %}
+            </a>
         </div>
     </div>
 </section>
 
 <section class="cta">
     <div class="container">
-        <h2>Test Süreçlerinizi Geliştirmeye Hazır mısınız?</h2>
-        <p>SotecAI'nin kapsamlı kaynaklarından yararlanmak, güncel bilgilere erişmek ve test topluluğumuzun bir parçası olmak için hemen üye olun.</p>
-        <a href="{{ url_for('kayit') }}" class="btn btn-outline">Hemen Üye Olun</a>
+        <h2>
+            {% if current_lang == 'tr' %}
+                Test Süreçlerinizi Geliştirmeye Hazır mısınız?
+            {% else %}
+                Are You Ready to Improve Your Testing Processes?
+            {% endif %}
+        </h2>
+        <p>
+            {% if current_lang == 'tr' %}
+                SotecAI'nin kapsamlı kaynaklarından yararlanmak, güncel bilgilere erişmek ve test topluluğumuzun bir parçası olmak için hemen üye olun.
+            {% else %}
+                Sign up now to take advantage of SotecAI's comprehensive resources, access up-to-date information, and become part of our testing community.
+            {% endif %}
+        </p>
+        <a href="{{ url_for('kayit') }}" class="btn btn-outline">
+            {% if current_lang == 'tr' %}
+                Hemen Üye Olun
+            {% else %}
+                Sign Up Now
+            {% endif %}
+        </a>
     </div>
 </section>
 {% endblock %}

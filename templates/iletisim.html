@@ -1,62 +1,161 @@
 {% extends 'base.html' %}
 
-{% block title %}İletişim - SotecAI{% endblock %}
+{% block title %}
+    {% set current_lang = session.get('lang', 'tr') %}
+    {% if current_lang == 'tr' %}
+        İletişim - SotecAI
+    {% else %}
+        Contact - SotecAI
+    {% endif %}
+{% endblock %}
 
 {% block content %}
+{% set current_lang = session.get('lang', 'tr') %}
+
 <div class="page-header-dark">
     <div class="container">
-        <h1>İletişim</h1>
-        <p>Sorularınız veya işbirliği talepleriniz için bizimle iletişime geçin.</p>
+        <h1>
+            {% if current_lang == 'tr' %}
+                İletişim
+            {% else %}
+                Contact
+            {% endif %}
+        </h1>
+        <p>
+            {% if current_lang == 'tr' %}
+                Sorularınız veya işbirliği talepleriniz için bizimle iletişime geçin.
+            {% else %}
+                Contact us for your questions or collaboration requests.
+            {% endif %}
+        </p>
     </div>
 </div>
 
 <div class="container">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; max-width: 1000px; margin: 0 auto 3rem;">
         <div>
-            <h2>Bize Yazın</h2>
-            <p style="margin-bottom: 2rem;">Formu doldurarak bize mesaj gönderebilirsiniz. En kısa sürede size dönüş yapacağız.</p>
+            <h2>
+                {% if current_lang == 'tr' %}
+                    Bize Yazın
+                {% else %}
+                    Write to Us
+                {% endif %}
+            </h2>
+            <p style="margin-bottom: 2rem;">
+                {% if current_lang == 'tr' %}
+                    Formu doldurarak bize mesaj gönderebilirsiniz. En kısa sürede size dönüş yapacağız.
+                {% else %}
+                    You can send us a message by filling out the form. We will get back to you as soon as possible.
+                {% endif %}
+            </p>
             
             <form action="{{ url_for('iletisim') }}" method="POST">
                 <div class="form-group">
-                    <label for="ad" class="form-label">Adınız</label>
+                    <label for="ad" class="form-label">
+                        {% if current_lang == 'tr' %}
+                            Adınız
+                        {% else %}
+                            Your Name
+                        {% endif %}
+                    </label>
                     <input type="text" id="ad" name="ad" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="email" class="form-label">E-posta Adresiniz</label>
+                    <label for="email" class="form-label">
+                        {% if current_lang == 'tr' %}
+                            E-posta Adresiniz
+                        {% else %}
+                            Your Email Address
+                        {% endif %}
+                    </label>
                     <input type="email" id="email" name="email" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="mesaj" class="form-label">Mesajınız</label>
+                    <label for="mesaj" class="form-label">
+                        {% if current_lang == 'tr' %}
+                            Mesajınız
+                        {% else %}
+                            Your Message
+                        {% endif %}
+                    </label>
                     <textarea id="mesaj" name="mesaj" class="form-control" required></textarea>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Gönder</button>
+                <button type="submit" class="btn btn-primary">
+                    {% if current_lang == 'tr' %}
+                        Gönder
+                    {% else %}
+                        Send
+                    {% endif %}
+                </button>
             </form>
         </div>
         
         <div>
-            <h2>İletişim Bilgileri</h2>
-            <p style="margin-bottom: 2rem;">Aşağıdaki kanallardan da bizimle iletişime geçebilirsiniz.</p>
+            <h2>
+                {% if current_lang == 'tr' %}
+                    İletişim Bilgileri
+                {% else %}
+                    Contact Information
+                {% endif %}
+            </h2>
+            <p style="margin-bottom: 2rem;">
+                {% if current_lang == 'tr' %}
+                    Aşağıdaki kanallardan da bizimle iletişime geçebilirsiniz.
+                {% else %}
+                    You can also contact us through the following channels.
+                {% endif %}
+            </p>
             
             <div style="margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.2rem;"><i class="fas fa-envelope" style="color: var(--primary); margin-right: 0.5rem;"></i> E-posta</h3>
+                <h3 style="font-size: 1.2rem;"><i class="fas fa-envelope" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        E-posta
+                    {% else %}
+                        Email
+                    {% endif %}
+                </h3>
                 <p><a href="mailto:info@sotecai.com">info@sotecai.com</a></p>
             </div>
             
             <div style="margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.2rem;"><i class="fas fa-phone" style="color: var(--primary); margin-right: 0.5rem;"></i> Telefon</h3>
+                <h3 style="font-size: 1.2rem;"><i class="fas fa-phone" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        Telefon
+                    {% else %}
+                        Phone
+                    {% endif %}
+                </h3>
                 <p>+90 (212) 123 45 67</p>
             </div>
             
             <div style="margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1.2rem;"><i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> Adres</h3>
-                <p>Levent Mahallesi, Büyükdere Caddesi No:123<br>Şişli, İstanbul, Türkiye</p>
+                <h3 style="font-size: 1.2rem;"><i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        Adres
+                    {% else %}
+                        Address
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if current_lang == 'tr' %}
+                        Levent Mahallesi, Büyükdere Caddesi No:123<br>Şişli, İstanbul, Türkiye
+                    {% else %}
+                        Levent District, Büyükdere Avenue No:123<br>Şişli, Istanbul, Turkey
+                    {% endif %}
+                </p>
             </div>
             
             <div>
-                <h3 style="font-size: 1.2rem;"><i class="fas fa-share-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> Sosyal Medya</h3>
+                <h3 style="font-size: 1.2rem;"><i class="fas fa-share-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        Sosyal Medya
+                    {% else %}
+                        Social Media
+                    {% endif %}
+                </h3>
                 <div class="social-links" style="margin-top: 0.5rem;">
                     <a href="#" style="background-color: #1DA1F2;"><i class="fab fa-twitter"></i></a>
                     <a href="#" style="background-color: #0077B5;"><i class="fab fa-linkedin"></i></a>

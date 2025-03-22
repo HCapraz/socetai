@@ -1,25 +1,57 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, g
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
+from flask_babel import Babel, gettext as _
+from sqlalchemy.orm import joinedload
+from functools import wraps
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'sotecai-gizli-anahtar'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sotecai.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'sotecai-gizli-anahtar')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///sotecai.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_pre_ping': True}
+
+# Babel configuration
+app.config['BABEL_DEFAULT_LOCALE'] = 'tr'
+app.config['BABEL_SUPPORTED_LOCALES'] = ['tr', 'en']
+babel = Babel(app)
+app.jinja_env.add_extension('jinja2.ext.i18n')
 
 db = SQLAlchemy(app)
 
-# Veritabanı Modelleri
+# Language selection function
+def get_locale():
+    # Check URL parameter
+    lang = request.args.get('lang')
+    if lang in app.config['BABEL_SUPPORTED_LOCALES']:
+        session['lang'] = lang
+        return lang
+    # Check session
+    elif 'lang' in session:
+        return session['lang']
+    # Default to Turkish
+    return 'tr'
+
+# Assign the function directly instead of using a decorator
+babel.locale_selector_func = get_locale
+
+@app.route('/set_language/<language>')
+def set_language(language):
+    if language in app.config['BABEL_SUPPORTED_LOCALES']:
+        session['lang'] = language
+    return redirect(request.referrer or url_for('anasayfa'))
+
+# Database Models with optimized indexing
 class Kullanici(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ad = db.Column(db.String(50), nullable=False)
     soyad = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False, index=True)
     parola_hash = db.Column(db.String(200), nullable=False)
-    kayit_tarihi = db.Column(db.DateTime, default=datetime.utcnow)
+    kayit_tarihi = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     
     def parola_ayarla(self, parola):
         self.parola_hash = generate_password_hash(parola)
@@ -29,44 +61,55 @@ class Kullanici(db.Model):
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    baslik = db.Column(db.String(200), nullable=False)
+    baslik = db.Column(db.String(200), nullable=False, index=True)
     icerik = db.Column(db.Text, nullable=False)
-    yazar_id = db.Column(db.Integer, db.ForeignKey('kullanici.id'))
-    tarih = db.Column(db.DateTime, default=datetime.utcnow)
+    yazar_id = db.Column(db.Integer, db.ForeignKey('kullanici.id'), index=True)
+    tarih = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     ozet = db.Column(db.String(300))
-    etiketler = db.Column(db.String(200))
+    etiketler = db.Column(db.String(200), index=True)
+    
+    # Relationship for efficient querying
+    yazar = db.relationship('Kullanici', backref='blogs')
 
 class Yorum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'))
-    kullanici_id = db.Column(db.Integer, db.ForeignKey('kullanici.id'))
+    blog_id = db.Column(db.Integer, db.ForeignKey('blog.id'), index=True)
+    kullanici_id = db.Column(db.Integer, db.ForeignKey('kullanici.id'), index=True)
     icerik = db.Column(db.Text, nullable=False)
-    tarih = db.Column(db.DateTime, default=datetime.utcnow)
+    tarih = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    
+    # Relationships
+    blog = db.relationship('Blog', backref='yorumlar')
+    kullanici = db.relationship('Kullanici', backref='yorumlar')
 
 class Arac(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    ad = db.Column(db.String(100), nullable=False)
+    ad = db.Column(db.String(100), nullable=False, index=True)
     aciklama = db.Column(db.Text, nullable=False)
-    kategori = db.Column(db.String(50))
+    kategori = db.Column(db.String(50), index=True)
     link = db.Column(db.String(200))
 
 class Forum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    baslik = db.Column(db.String(200), nullable=False)
+    baslik = db.Column(db.String(200), nullable=False, index=True)
     icerik = db.Column(db.Text, nullable=False)
-    kullanici_id = db.Column(db.Integer, db.ForeignKey('kullanici.id'))
-    tarih = db.Column(db.DateTime, default=datetime.utcnow)
-    etiketler = db.Column(db.String(200))
+    kullanici_id = db.Column(db.Integer, db.ForeignKey('kullanici.id'), index=True)
+    tarih = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    etiketler = db.Column(db.String(200), index=True)
+    
+    # Relationship
+    kullanici = db.relationship('Kullanici', backref='forum_postlari')
 
-# Örnek içerik verileri
+# Optimize sample data insertion with bulk operations
 def ornek_veriler_ekle():
-    # Örnek kullanıcı
+    # Add admin user if it doesn't exist
     if not Kullanici.query.filter_by(email='admin@sotecai.com').first():
         admin = Kullanici(ad='Admin', soyad='SotecAI', email='admin@sotecai.com')
         admin.parola_ayarla('admin123')
         db.session.add(admin)
+        db.session.commit()
     
-    # Örnek blog yazıları
+    # Add sample blogs if none exist
     if Blog.query.count() == 0:
         bloglar = [
             {
@@ -90,7 +133,8 @@ def ornek_veriler_ekle():
                 <h3>Mobil ve IoT Test Otomasyonu</h3>
                 <p>Mobil uygulamalar ve IoT cihazlarının yaygınlaşmasıyla birlikte, bu platformlar için özelleştirilmiş test araçları ve yaklaşımları da gelişiyor. Gerçek cihaz çiftlikleri ve bulut tabanlı test ortamları standart hale geliyor.</p>
                 """,
-                'etiketler': 'otomasyon,yapay zeka,devops,mikroservis,mobil,trend'
+                'etiketler': 'otomasyon,yapay zeka,devops,mikroservis,mobil,trend',
+                'yazar_id': 1
             },
             {
                 'baslik': 'Etkili API Testi Nasıl Yapılır?',
@@ -129,7 +173,8 @@ def ornek_veriler_ekle():
                     <li>CI/CD pipeline'ınıza entegre edin</li>
                 </ul>
                 """,
-                'etiketler': 'api,rest,soap,entegrasyon,otomasyon,postman'
+                'etiketler': 'api,rest,soap,entegrasyon,otomasyon,postman',
+                'yazar_id': 1
             },
             {
                 'baslik': 'Test Veri Yönetimi: Zorluklar ve Çözümler',
@@ -166,7 +211,8 @@ def ornek_veriler_ekle():
                 <h3>Sonuç</h3>
                 <p>Etkili test veri yönetimi, test süreçlerinizin kalitesini ve güvenilirliğini önemli ölçüde artırır. Doğru stratejiler ve araçlarla, test veri yönetimindeki zorlukların üstesinden gelebilir ve daha kapsamlı test senaryoları oluşturabilirsiniz.</p>
                 """,
-                'etiketler': 'veri,maskeleme,otomasyon,gdpr,kvkk,strateji'
+                'etiketler': 'veri,maskeleme,otomasyon,gdpr,kvkk,strateji',
+                'yazar_id': 1
             },
             {
                 'baslik': 'Yazılım Test Otomasyonunda Python Kullanımı',
@@ -250,21 +296,16 @@ driver.quit()
                     <li>Düzenli CI/CD pipeline entegrasyonu sağlayın</li>
                 </ul>
                 """,
-                'etiketler': 'python,selenium,pytest,bdd,otomasyon,robot framework'
+                'etiketler': 'python,selenium,pytest,bdd,otomasyon,robot framework',
+                'yazar_id': 1
             }
         ]
         
-        for blog_data in bloglar:
-            blog = Blog(
-                baslik=blog_data['baslik'],
-                ozet=blog_data['ozet'],
-                icerik=blog_data['icerik'],
-                yazar_id=1,
-                etiketler=blog_data['etiketler']
-            )
-            db.session.add(blog)
+        # Bulk insert blogs
+        db.session.bulk_insert_mappings(Blog, bloglar)
+        db.session.commit()
     
-    # Örnek araçlar
+    # Add sample tools if none exist
     if Arac.query.count() == 0:
         araclar = [
             {
@@ -317,23 +358,40 @@ driver.quit()
             }
         ]
         
-        for arac_data in araclar:
-            arac = Arac(
-                ad=arac_data['ad'],
-                aciklama=arac_data['aciklama'],
-                kategori=arac_data['kategori'],
-                link=arac_data['link']
-            )
-            db.session.add(arac)
-    
-    db.session.commit()
+        # Bulk insert tools
+        db.session.bulk_insert_mappings(Arac, araclar)
+        db.session.commit()
 
-# Flask Route Tanımlamaları
+# Login required decorator
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'kullanici_id' not in session:
+            flash(_('Bu sayfayı görüntülemek için giriş yapmalısınız.'), 'warning')
+            return redirect(url_for('giris', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Before request handler to load current user
+@app.before_request
+def load_user():
+    if 'kullanici_id' in session:
+        g.user = Kullanici.query.get(session['kullanici_id'])
+    else:
+        g.user = None
+
+# Routes with optimization for database queries
 @app.route('/')
 def anasayfa():
-    son_bloglar = Blog.query.order_by(Blog.tarih.desc()).limit(3).all()
+    # Efficient eager loading with joinedload
+    son_bloglar = Blog.query.options(
+        joinedload(Blog.yazar)
+    ).order_by(Blog.tarih.desc()).limit(3).all()
+    
+    # Use subquery for distinct categories to improve performance
     kategoriler = db.session.query(Arac.kategori).distinct().all()
     kategoriler = [k[0] for k in kategoriler]
+    
     return render_template('index.html', son_bloglar=son_bloglar, kategoriler=kategoriler)
 
 @app.route('/hakkimizda')
@@ -342,12 +400,21 @@ def hakkimizda():
 
 @app.route('/blog')
 def blog_listesi():
-    bloglar = Blog.query.order_by(Blog.tarih.desc()).all()
+    # Efficient eager loading
+    bloglar = Blog.query.options(
+        joinedload(Blog.yazar)
+    ).order_by(Blog.tarih.desc()).all()
+    
     return render_template('blog_listesi.html', bloglar=bloglar)
 
 @app.route('/blog/<int:blog_id>')
 def blog_detay(blog_id):
-    blog = Blog.query.get_or_404(blog_id)
+    # Get blog with author and comments in a single query
+    blog = Blog.query.options(
+        joinedload(Blog.yazar),
+        joinedload(Blog.yorumlar).joinedload(Yorum.kullanici)
+    ).get_or_404(blog_id)
+    
     return render_template('blog_detay.html', blog=blog)
 
 @app.route('/araclar')
@@ -355,6 +422,7 @@ def araclar():
     tum_araclar = Arac.query.all()
     kategoriler = db.session.query(Arac.kategori).distinct().all()
     kategoriler = [k[0] for k in kategoriler]
+    
     return render_template('araclar.html', araclar=tum_araclar, kategoriler=kategoriler)
 
 @app.route('/egitimler')
@@ -367,13 +435,21 @@ def iletisim():
         ad = request.form.get('ad')
         email = request.form.get('email')
         mesaj = request.form.get('mesaj')
-        # Burada e-posta gönderimi yapılabilir
-        flash('Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.', 'success')
+        
+        # Here you can implement email sending
+        # For example with Flask-Mail
+        
+        flash(_('Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.'), 'success')
         return redirect(url_for('iletisim'))
+        
     return render_template('iletisim.html')
 
 @app.route('/giris', methods=['GET', 'POST'])
 def giris():
+    # Redirect if already logged in
+    if 'kullanici_id' in session:
+        return redirect(url_for('anasayfa'))
+        
     if request.method == 'POST':
         email = request.form.get('email')
         parola = request.form.get('parola')
@@ -381,15 +457,21 @@ def giris():
         kullanici = Kullanici.query.filter_by(email=email).first()
         if kullanici and kullanici.parola_dogrula(parola):
             session['kullanici_id'] = kullanici.id
-            flash('Başarıyla giriş yaptınız!', 'success')
-            return redirect(url_for('anasayfa'))
+            # Get next parameter or default to homepage
+            next_page = request.args.get('next', url_for('anasayfa'))
+            flash(_('Başarıyla giriş yaptınız!'), 'success')
+            return redirect(next_page)
         else:
-            flash('Geçersiz e-posta veya parola!', 'danger')
+            flash(_('Geçersiz e-posta veya parola!'), 'danger')
     
     return render_template('giris.html')
 
 @app.route('/kayit', methods=['GET', 'POST'])
 def kayit():
+    # Redirect if already logged in
+    if 'kullanici_id' in session:
+        return redirect(url_for('anasayfa'))
+        
     if request.method == 'POST':
         ad = request.form.get('ad')
         soyad = request.form.get('soyad')
@@ -398,20 +480,22 @@ def kayit():
         parola_tekrar = request.form.get('parola_tekrar')
         
         if parola != parola_tekrar:
-            flash('Parolalar eşleşmiyor!', 'danger')
+            flash(_('Parolalar eşleşmiyor!'), 'danger')
             return redirect(url_for('kayit'))
         
+        # Check if email already exists
         if Kullanici.query.filter_by(email=email).first():
-            flash('Bu e-posta adresi zaten kullanılıyor!', 'danger')
+            flash(_('Bu e-posta adresi zaten kullanılıyor!'), 'danger')
             return redirect(url_for('kayit'))
         
+        # Create new user
         yeni_kullanici = Kullanici(ad=ad, soyad=soyad, email=email)
         yeni_kullanici.parola_ayarla(parola)
         
         db.session.add(yeni_kullanici)
         db.session.commit()
         
-        flash('Başarıyla kayıt oldunuz! Şimdi giriş yapabilirsiniz.', 'success')
+        flash(_('Başarıyla kayıt oldunuz! Şimdi giriş yapabilirsiniz.'), 'success')
         return redirect(url_for('giris'))
     
     return render_template('kayit.html')
@@ -419,34 +503,69 @@ def kayit():
 @app.route('/cikis')
 def cikis():
     session.pop('kullanici_id', None)
-    flash('Başarıyla çıkış yaptınız!', 'success')
+    flash(_('Başarıyla çıkış yaptınız!'), 'success')
     return redirect(url_for('anasayfa'))
 
-# Şablonlara yardımcı fonksiyonları aktarmak için context processor
+# Error handlers
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('errors/500.html'), 500
+
+# Template context processor
 @app.context_processor
 def ortak_veriler():
     def kullanici_giris_yapti_mi():
         return 'kullanici_id' in session
     
     def mevcut_kullanici():
-        if 'kullanici_id' in session:
-            return Kullanici.query.get(session['kullanici_id'])
+        if hasattr(g, 'user'):
+            return g.user
         return None
     
-    # 'now' değişkenini ekleyin
     from datetime import datetime
     now = datetime.now()
     
     return {
         'kullanici_giris_yapti_mi': kullanici_giris_yapti_mi,
         'mevcut_kullanici': mevcut_kullanici(),
-        'now': now  # now değişkenini şablonlara iletiyoruz
+        'now': now,
+        # Add translations for common phrases
+        'tr_en': {
+            'tr': {
+                'anasayfa': 'Ana Sayfa',
+                'hakkimizda': 'Hakkımızda',
+                'blog': 'Blog',
+                'araclar': 'Araçlar',
+                'egitimler': 'Eğitimler',
+                'iletisim': 'İletişim',
+                'giris': 'Giriş',
+                'cikis': 'Çıkış',
+                'kayit': 'Üye Ol'
+            },
+            'en': {
+                'anasayfa': 'Home',
+                'hakkimizda': 'About Us',
+                'blog': 'Blog',
+                'araclar': 'Tools',
+                'egitimler': 'Training',
+                'iletisim': 'Contact',
+                'giris': 'Login',
+                'cikis': 'Logout',
+                'kayit': 'Sign Up'
+            }
+        }
     }
 
-# Veritabanını oluştur ve örnek verileri ekle
+# Setup database and sample data
 with app.app_context():
     db.create_all()
     ornek_veriler_ekle()
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    app.run(host='0.0.0.0', port=port, debug=debug)

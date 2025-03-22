@@ -1,66 +1,421 @@
 {% extends 'base.html' %}
 
-{% block title %}Hakkımızda - SotecAI{% endblock %}
+{% block title %}
+    {% set current_lang = session.get('lang', 'tr') %}
+    {% if current_lang == 'tr' %}
+        SotecAI - Hakkımızda
+    {% else %}
+        SotecAI - About Us
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-<div class="page-header-dark">
-    <div class="container">
-        <h1>Hakkımızda</h1>
-        <p>SotecAI'nin vizyonu, misyonu ve ekibi hakkında bilgi edinin.</p>
+{% set current_lang = session.get('lang', 'tr') %}
+
+<!-- Modern Hero Section with Parallax Effect -->
+<section class="about-hero" style="position: relative; padding: 100px 0; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; overflow: hidden;">
+    <!-- Animated Background Elements -->
+    <div class="animated-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1; z-index: 1;">
+        <img src="{{ url_for('static', filename='images/circuit-pattern.svg') }}" alt="Background Pattern" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    
+    <div class="container" style="position: relative; z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+                    {% if current_lang == 'tr' %}
+                        Hakkımızda
+                    {% else %}
+                        About Us
+                    {% endif %}
+                </h1>
+                <p style="font-size: 1.25rem; margin-bottom: 2rem; max-width: 600px; text-shadow: 0 1px 5px rgba(0,0,0,0.2);">
+                    {% if current_lang == 'tr' %}
+                        SotecAI'nın vizyonu, misyonu ve ekibi hakkında bilgi edinin.
+                    {% else %}
+                        Learn about SotecAI's vision, mission and team.
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-lg-6 d-none d-lg-flex justify-content-center">
+                <div style="width: 80%; height: auto; position: relative;">
+                    <img src="{{ url_for('static', filename='images/team.png') }}" alt="Team" style="width: 100%; height: auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); border-radius: 8px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container py-5">
+    <!-- Who We Are Section with Card Design -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="card border-0 rounded-lg shadow-sm hover-shadow" style="padding: 2.5rem; transition: all 0.3s ease;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <div style="background-color: #3b82f6; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <i class="fas fa-users" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                        <h2 class="m-0 font-weight-bold" style="font-size: 2rem;">
+                            {% if current_lang == 'tr' %}
+                                Biz Kimiz?
+                            {% else %}
+                                Who Are We?
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        {% if current_lang == 'tr' %}
+                            SotecAI, yazılım test dünyasında çalışan profesyoneller için kapsamlı kaynaklar, araçlar ve bilgiler sunan bir platformdur. Misyonumuz, modern yazılım test süreçlerini daha erişilebilir, verimli ve etkili hale getirmektir.
+                        {% else %}
+                            SotecAI is a platform offering comprehensive resources, tools and information for professionals working in the software testing world. Our mission is to make modern software testing processes more accessible, efficient and effective.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vision and Mission Section with Modern Design -->
+    <div class="row mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="card border-0 rounded-lg shadow-sm hover-shadow h-100" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 2.5rem; transition: all 0.3s ease;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <div style="background-color: #0ea5e9; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <i class="fas fa-eye" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                        <h2 class="m-0 font-weight-bold" style="font-size: 1.8rem;">
+                            {% if current_lang == 'tr' %}
+                                Vizyonumuz
+                            {% else %}
+                                Our Vision
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        {% if current_lang == 'tr' %}
+                            Yazılım test alanında lider bilgi kaynağı olarak, profesyonellerin becerilerini geliştirmelerine ve yazılım kalitesini artırmalarına yardımcı olmak.
+                        {% else %}
+                            To help professionals improve their skills and enhance software quality by being the leading knowledge resource in the software testing field.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card border-0 rounded-lg shadow-sm hover-shadow h-100" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); padding: 2.5rem; transition: all 0.3s ease;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <div style="background-color: #2563eb; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <i class="fas fa-bullseye" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                        <h2 class="m-0 font-weight-bold" style="font-size: 1.8rem;">
+                            {% if current_lang == 'tr' %}
+                                Misyonumuz
+                            {% else %}
+                                Our Mission
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <p style="font-size: 1.1rem;">
+                        {% if current_lang == 'tr' %}
+                            SotecAI olarak, yazılım test süreçlerini iyileştirmek için:
+                        {% else %}
+                            As SotecAI, to improve software testing processes by:
+                        {% endif %}
+                    </p>
+                    <ul class="mission-list" style="list-style-type: none; padding-left: 0; margin-top: 1rem;">
+                        <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background-color: rgba(37, 99, 235, 0.1); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-book" style="color: #2563eb;"></i>
+                            </div>
+                            <span>
+                                {% if current_lang == 'tr' %}
+                                    Güncel ve kapsamlı bilgi kaynakları sunmak
+                                {% else %}
+                                    Providing up-to-date and comprehensive knowledge resources
+                                {% endif %}
+                            </span>
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background-color: rgba(37, 99, 235, 0.1); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-lightbulb" style="color: #2563eb;"></i>
+                            </div>
+                            <span>
+                                {% if current_lang == 'tr' %}
+                                    En iyi uygulamaları ve yeni teknolojileri tanıtmak
+                                {% else %}
+                                    Introducing best practices and new technologies
+                                {% endif %}
+                            </span>
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background-color: rgba(37, 99, 235, 0.1); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-robot" style="color: #2563eb;"></i>
+                            </div>
+                            <span>
+                                {% if current_lang == 'tr' %}
+                                    Test otomasyon süreçlerini kolaylaştıracak çözümler geliştirmek
+                                {% else %}
+                                    Developing solutions to facilitate test automation processes
+                                {% endif %}
+                            </span>
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="background-color: rgba(37, 99, 235, 0.1); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-users" style="color: #2563eb;"></i>
+                            </div>
+                            <span>
+                                {% if current_lang == 'tr' %}
+                                    Test profesyonelleri arasında bir topluluk oluşturmak
+                                {% else %}
+                                    Creating a community among test professionals
+                                {% endif %}
+                            </span>
+                        </li>
+                        <li style="display: flex; align-items: center;">
+                            <div style="background-color: rgba(37, 99, 235, 0.1); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-certificate" style="color: #2563eb;"></i>
+                            </div>
+                            <span>
+                                {% if current_lang == 'tr' %}
+                                    Yazılım kalitesinin önemini vurgulamak
+                                {% else %}
+                                    Emphasizing the importance of software quality
+                                {% endif %}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Our Team Section -->
+    <div class="row mb-5">
+        <div class="col-lg-12 text-center mb-5">
+            <h2 class="section-title" style="font-size: 2.2rem; font-weight: 700; position: relative; display: inline-block; margin-bottom: 3rem;">
+                {% if current_lang == 'tr' %}
+                    Ekibimiz
+                {% else %}
+                    Our Team
+                {% endif %}
+                <span style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 70px; height: 4px; background-color: #3b82f6; border-radius: 2px;"></span>
+            </h2>
+            <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem; color: #64748b;">
+                {% if current_lang == 'tr' %}
+                    Uzman ekibimiz, yazılım test dünyasındaki deneyimlerini sizlerle paylaşıyor.
+                {% else %}
+                    Our expert team shares their experiences in the software testing world with you.
+                {% endif %}
+            </p>
+        </div>
+        
+        <!-- Team Members -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="team-card" style="text-align: center; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+                <div style="height: 250px; background-color: #dbeafe; position: relative;">
+                    <img src="{{ url_for('static', filename='images/team1.jpg') }}" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="padding: 1.5rem;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Hikmet CAPRAZ</h3>
+                    <p style="color: #3b82f6; margin-bottom: 1rem; font-weight: 500;">
+                        {% if current_lang == 'tr' %}
+                            Kurucu & CTO
+                        {% else %}
+                            Founder & CTO
+                        {% endif %}
+                    </p>
+                    <p style="color: #64748b; font-size: 0.95rem;">
+                        {% if current_lang == 'tr' %}
+                            10+ yıllık test otomasyonu ve kalite güvence deneyimi
+                        {% else %}
+                            10+ years of experience in test automation and quality assurance
+                        {% endif %}
+                    </p>
+                    <div class="social-links" style="margin-top: 1rem;">
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="team-card" style="text-align: center; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+                <div style="height: 250px; background-color: #dbeafe; position: relative;">
+                    <img src="{{ url_for('static', filename='images/team2.jpg') }}" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="padding: 1.5rem;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Zeynep Kaya</h3>
+                    <p style="color: #3b82f6; margin-bottom: 1rem; font-weight: 500;">
+                        {% if current_lang == 'tr' %}
+                            Test Otomasyonu Uzmanı
+                        {% else %}
+                            Test Automation Specialist
+                        {% endif %}
+                    </p>
+                    <p style="color: #64748b; font-size: 0.95rem;">
+                        {% if current_lang == 'tr' %}
+                            Selenium, Appium ve CI/CD entegrasyonu konusunda uzman
+                        {% else %}
+                            Expert in Selenium, Appium and CI/CD integration
+                        {% endif %}
+                    </p>
+                    <div class="social-links" style="margin-top: 1rem;">
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="team-card" style="text-align: center; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s ease;">
+                <div style="height: 250px; background-color: #dbeafe; position: relative;">
+                    <img src="{{ url_for('static', filename='images/team3.jpg') }}" alt="Team Member" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="padding: 1.5rem;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Murat Demir</h3>
+                    <p style="color: #3b82f6; margin-bottom: 1rem; font-weight: 500;">
+                        {% if current_lang == 'tr' %}
+                            Performans Test Mühendisi
+                        {% else %}
+                            Performance Test Engineer
+                        {% endif %}
+                    </p>
+                    <p style="color: #64748b; font-size: 0.95rem;">
+                        {% if current_lang == 'tr' %}
+                            JMeter ve k6 ile performans testi konusunda deneyimli
+                        {% else %}
+                            Experienced in performance testing with JMeter and k6
+                        {% endif %}
+                    </p>
+                    <div class="social-links" style="margin-top: 1rem;">
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: #64748b; margin: 0 0.5rem; font-size: 1.1rem;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Statistics Section -->
+    <div class="statistics-section" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; padding: 3rem 2rem; margin-bottom: 4rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+        <div class="row text-center">
+            <div class="col-lg-12 mb-4">
+                <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">
+                    {% if current_lang == 'tr' %}
+                        Rakamlarla SotecAI
+                    {% else %}
+                        SotecAI in Numbers
+                    {% endif %}
+                </h2>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">5000+</div>
+                    <p style="color: #64748b; font-weight: 500;">
+                        {% if current_lang == 'tr' %}
+                            Toplam Kullanıcı
+                        {% else %}
+                            Total Users
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">100+</div>
+                    <p style="color: #64748b; font-weight: 500;">
+                        {% if current_lang == 'tr' %}
+                            Blog Yazısı
+                        {% else %}
+                            Blog Articles
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">50+</div>
+                    <p style="color: #64748b; font-weight: 500;">
+                        {% if current_lang == 'tr' %}
+                            Test Aracı
+                        {% else %}
+                            Testing Tools
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.5rem;">10+</div>
+                    <p style="color: #64748b; font-weight: 500;">
+                        {% if current_lang == 'tr' %}
+                            Yıllık Deneyim
+                        {% else %}
+                            Years of Experience
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA Section -->
+    <div class="cta-section" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 16px; padding: 3rem; text-align: center; color: white; margin-bottom: 2rem;">
+        <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">
+            {% if current_lang == 'tr' %}
+                Hemen SotecAI Ailesine Katılın
+            {% else %}
+                Join the SotecAI Family Today
+            {% endif %}
+        </h2>
+        <p style="font-size: 1.1rem; max-width: 700px; margin: 0 auto 2rem; opacity: 0.9;">
+            {% if current_lang == 'tr' %}
+                Yazılım test süreçlerinizi geliştirmek, güncel bilgilere erişmek ve test topluluğumuzun bir parçası olmak için üye olun.
+            {% else %}
+                Sign up to improve your software testing processes, access up-to-date information, and become part of our testing community.
+            {% endif %}
+        </p>
+        <a href="{{ url_for('kayit') }}" class="btn btn-light btn-lg" style="padding: 0.75rem 2rem; font-weight: 600; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            {% if current_lang == 'tr' %}
+                Ücretsiz Üye Olun
+            {% else %}
+                Sign Up for Free
+            {% endif %}
+        </a>
     </div>
 </div>
 
-<div class="container">
-    <div style="max-width: 800px; margin: 0 auto;">
-        <h2>Biz Kimiz?</h2>
-        <p>SotecAI, yazılım test dünyasında çalışan profesyoneller için kapsamlı kaynaklar, araçlar ve bilgiler sunan bir platformdur. Misyonumuz, modern yazılım test süreçlerini daha erişilebilir, verimli ve etkili hale getirmektir.</p>
-        
-        <h2 style="margin-top: 2rem;">Vizyonumuz</h2>
-        <p>Yazılım test alanında lider bilgi kaynağı olarak, profesyonellerin becerilerini geliştirmelerine ve yazılım kalitesini artırmalarına yardımcı olmak.</p>
-        
-        <h2 style="margin-top: 2rem;">Misyonumuz</h2>
-        <p>SotecAI olarak, yazılım test süreçlerini iyileştirmek için:</p>
-        <ul style="margin-bottom: 2rem;">
-            <li>Güncel ve kapsamlı bilgi kaynakları sunmak</li>
-            <li>En iyi uygulamaları ve yeni teknolojileri tanıtmak</li>
-            <li>Test otomasyon süreçlerini kolaylaştıracak çözümler geliştirmek</li>
-            <li>Test profesyonelleri arasında bir topluluk oluşturmak</li>
-            <li>Yazılım kalitesinin önemini vurgulamak</li>
-        </ul>
-        
-        <h2>Neden SotecAI?</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <h3>Uzman İçerik</h3>
-                <p>Test alanında uzman profesyoneller tarafından hazırlanan güncel ve kapsamlı içerikler.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <h3>Pratik Araçlar</h3>
-                <p>Test süreçlerinizi hızlandıracak ve kolaylaştıracak modern araçlar ve kaynaklar.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>Aktif Topluluk</h3>
-                <p>Yazılım test alanındaki profesyonellerle bilgi ve deneyim paylaşabileceğiniz bir platform.</p>
-            </div>
-        </div>
-        
-        <h2 style="margin-top: 2rem;">Ekibimiz</h2>
-        <p>SotecAI, yazılım test dünyasında yılların deneyimine sahip profesyonellerden oluşan bir ekip tarafından yönetilmektedir. Ekibimiz, test otomasyonu, performans testleri, güvenlik testleri ve mobil test gibi alanlarda uzmanlık sahibidir.</p>
-        
-        <div style="text-align: center; margin: 3rem 0;">
-            <a href="{{ url_for('iletisim') }}" class="btn btn-primary">Bizimle İletişime Geçin</a>
-        </div>
-    </div>
-</div>
+<!-- Add custom CSS for hover effects -->
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    
+    .team-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    
+    .social-links a:hover {
+        color: #3b82f6 !important;
+    }
+    
+    @media (max-width: 768px) {
+        .about-hero {
+            padding: 60px 0 !important;
+        }
+        .about-hero h1 {
+            font-size: 2.5rem !important;
+        }
+    }
+</style>
 {% endblock %}

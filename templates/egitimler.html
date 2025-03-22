@@ -1,107 +1,290 @@
 {% extends 'base.html' %}
 
-{% block title %}Eğitimler - SotecAI{% endblock %}
+{% block title %}
+    {% set current_lang = session.get('lang', 'tr') %}
+    {% if current_lang == 'tr' %}
+        Eğitimler - SotecAI
+    {% else %}
+        Training Programs - SotecAI
+    {% endif %}
+{% endblock %}
 
 {% block content %}
+{% set current_lang = session.get('lang', 'tr') %}
+
 <div class="page-header-dark">
     <div class="container">
-        <h1>Test Eğitimleri</h1>
-        <p>Yazılım test becerilerinizi geliştirmek için tasarlanmış kapsamlı eğitim programlarımız.</p>
+        <h1>
+            {% if current_lang == 'tr' %}
+                Test Eğitimleri
+            {% else %}
+                Testing Training Programs
+            {% endif %}
+        </h1>
+        <p>
+            {% if current_lang == 'tr' %}
+                Yazılım test becerilerinizi geliştirmek için tasarlanmış kapsamlı eğitim programlarımız.
+            {% else %}
+                Our comprehensive training programs designed to improve your software testing skills.
+            {% endif %}
+        </p>
     </div>
 </div>
 
 <div class="container">
     <div style="max-width: 800px; margin: 0 auto 3rem;">
         <div style="text-align: center; margin-bottom: 2rem;">
-            <h2>Eğitim Programlarımız</h2>
-            <p>Yazılım test alanında kariyerinizi ilerletmek için ihtiyacınız olan tüm eğitimleri burada bulabilirsiniz.</p>
+            <h2>
+                {% if current_lang == 'tr' %}
+                    Eğitim Programlarımız
+                {% else %}
+                    Our Training Programs
+                {% endif %}
+            </h2>
+            <p>
+                {% if current_lang == 'tr' %}
+                    Yazılım test alanında kariyerinizi ilerletmek için ihtiyacınız olan tüm eğitimleri burada bulabilirsiniz.
+                {% else %}
+                    Here you can find all the training you need to advance your career in software testing.
+                {% endif %}
+            </p>
         </div>
         
         <div class="features-grid" style="grid-template-columns: 1fr; gap: 1.5rem;">
             <div class="feature-card">
-                <h3><i class="fas fa-graduation-cap" style="color: var(--primary); margin-right: 0.5rem;"></i> Selenium ile Test Otomasyonu</h3>
-                <p style="margin-bottom: 1rem;">Web uygulamalarınızı otomatize etmek için Selenium WebDriver'ı derinlemesine öğrenin. Java ve Python örnekleriyle Page Object Model (POM) ve diğer iyi pratikleri uygulayın.</p>
+                <h3><i class="fas fa-graduation-cap" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        Selenium ile Test Otomasyonu
+                    {% else %}
+                        Test Automation with Selenium
+                    {% endif %}
+                </h3>
+                <p style="margin-bottom: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        Web uygulamalarınızı otomatize etmek için Selenium WebDriver'ı derinlemesine öğrenin. Java ve Python örnekleriyle Page Object Model (POM) ve diğer iyi pratikleri uygulayın.
+                    {% else %}
+                        Learn Selenium WebDriver in depth to automate your web applications. Apply Page Object Model (POM) and other best practices with Java and Python examples.
+                    {% endif %}
+                </p>
                 <div>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
-                        <i class="far fa-clock"></i> 24 Saat
+                        <i class="far fa-clock"></i> 
+                        {% if current_lang == 'tr' %}
+                            24 Saat
+                        {% else %}
+                            24 Hours
+                        {% endif %}
                     </span>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
-                        <i class="far fa-user"></i> Başlangıç-Orta Seviye
+                        <i class="far fa-user"></i> 
+                        {% if current_lang == 'tr' %}
+                            Başlangıç-Orta Seviye
+                        {% else %}
+                            Beginner-Intermediate Level
+                        {% endif %}
                     </span>
                 </div>
             </div>
             
             <div class="feature-card">
-                <h3><i class="fas fa-mobile-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> Appium ile Mobil Test Otomasyonu</h3>
-                <p style="margin-bottom: 1rem;">iOS ve Android uygulamalarını test etmek için Appium'u kullanmayı öğrenin. Gerçek cihazlar ve emülatörler üzerinde test senaryoları oluşturun ve çalıştırın.</p>
+                <h3><i class="fas fa-mobile-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        Appium ile Mobil Test Otomasyonu
+                    {% else %}
+                        Mobile Test Automation with Appium
+                    {% endif %}
+                </h3>
+                <p style="margin-bottom: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        iOS ve Android uygulamalarını test etmek için Appium'u kullanmayı öğrenin. Gerçek cihazlar ve emülatörler üzerinde test senaryoları oluşturun ve çalıştırın.
+                    {% else %}
+                        Learn to use Appium for testing iOS and Android applications. Create and run test scenarios on real devices and emulators.
+                    {% endif %}
+                </p>
                 <div>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
-                        <i class="far fa-clock"></i> 16 Saat
+                        <i class="far fa-clock"></i> 
+                        {% if current_lang == 'tr' %}
+                            16 Saat
+                        {% else %}
+                            16 Hours
+                        {% endif %}
                     </span>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
-                        <i class="far fa-user"></i> Orta Seviye
+                        <i class="far fa-user"></i> 
+                        {% if current_lang == 'tr' %}
+                            Orta Seviye
+                        {% else %}
+                            Intermediate Level
+                        {% endif %}
                     </span>
                 </div>
             </div>
             
             <div class="feature-card">
-                <h3><i class="fas fa-exchange-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> API Test Otomasyonu</h3>
-                <p style="margin-bottom: 1rem;">REST ve SOAP API'lerini test etmek için Postman, RestAssured ve SoapUI gibi araçları kullanmayı öğrenin. Test senaryolarınızı CI/CD pipeline'larına entegre edin.</p>
+                <h3><i class="fas fa-exchange-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        API Test Otomasyonu
+                    {% else %}
+                        API Test Automation
+                    {% endif %}
+                </h3>
+                <p style="margin-bottom: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        REST ve SOAP API'lerini test etmek için Postman, RestAssured ve SoapUI gibi araçları kullanmayı öğrenin. Test senaryolarınızı CI/CD pipeline'larına entegre edin.
+                    {% else %}
+                        Learn to use tools like Postman, RestAssured, and SoapUI to test REST and SOAP APIs. Integrate your test scenarios into CI/CD pipelines.
+                    {% endif %}
+                </p>
                 <div>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
-                        <i class="far fa-clock"></i> 12 Saat
+                        <i class="far fa-clock"></i> 
+                        {% if current_lang == 'tr' %}
+                            12 Saat
+                        {% else %}
+                            12 Hours
+                        {% endif %}
                     </span>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
-                        <i class="far fa-user"></i> Başlangıç-Orta Seviye
+                        <i class="far fa-user"></i> 
+                        {% if current_lang == 'tr' %}
+                            Başlangıç-Orta Seviye
+                        {% else %}
+                            Beginner-Intermediate Level
+                        {% endif %}
                     </span>
                 </div>
             </div>
             
             <div class="feature-card">
-                <h3><i class="fas fa-tachometer-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> JMeter ile Performans Testleri</h3>
-                <p style="margin-bottom: 1rem;">Web uygulamalarınızın performansını ölçmek ve iyileştirmek için JMeter kullanımını öğrenin. Yük testleri, stres testleri ve dayanıklılık testleri oluşturun.</p>
+                <h3><i class="fas fa-tachometer-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        JMeter ile Performans Testleri
+                    {% else %}
+                        Performance Testing with JMeter
+                    {% endif %}
+                </h3>
+                <p style="margin-bottom: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        Web uygulamalarınızın performansını ölçmek ve iyileştirmek için JMeter kullanımını öğrenin. Yük testleri, stres testleri ve dayanıklılık testleri oluşturun.
+                    {% else %}
+                        Learn to use JMeter to measure and improve the performance of your web applications. Create load tests, stress tests, and endurance tests.
+                    {% endif %}
+                </p>
                 <div>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
-                        <i class="far fa-clock"></i> 16 Saat
+                        <i class="far fa-clock"></i> 
+                        {% if current_lang == 'tr' %}
+                            16 Saat
+                        {% else %}
+                            16 Hours
+                        {% endif %}
                     </span>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
-                        <i class="far fa-user"></i> Orta Seviye
+                        <i class="far fa-user"></i> 
+                        {% if current_lang == 'tr' %}
+                            Orta Seviye
+                        {% else %}
+                            Intermediate Level
+                        {% endif %}
                     </span>
                 </div>
             </div>
             
             <div class="feature-card">
-                <h3><i class="fas fa-shield-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> Güvenlik Testleri Temelleri</h3>
-                <p style="margin-bottom: 1rem;">OWASP Top 10 güvenlik açıklarını anlamak ve test etmek için gereken temel bilgileri öğrenin. Zafiyet taraması araçlarını kullanmayı ve sonuçları yorumlamayı öğrenin.</p>
+                <h3><i class="fas fa-shield-alt" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        Güvenlik Testleri Temelleri
+                    {% else %}
+                        Security Testing Fundamentals
+                    {% endif %}
+                </h3>
+                <p style="margin-bottom: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        OWASP Top 10 güvenlik açıklarını anlamak ve test etmek için gereken temel bilgileri öğrenin. Zafiyet taraması araçlarını kullanmayı ve sonuçları yorumlamayı öğrenin.
+                    {% else %}
+                        Learn the basics needed to understand and test OWASP Top 10 security vulnerabilities. Learn to use vulnerability scanning tools and interpret results.
+                    {% endif %}
+                </p>
                 <div>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
-                        <i class="far fa-clock"></i> 20 Saat
+                        <i class="far fa-clock"></i> 
+                        {% if current_lang == 'tr' %}
+                            20 Saat
+                        {% else %}
+                            20 Hours
+                        {% endif %}
                     </span>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
-                        <i class="far fa-user"></i> Orta-İleri Seviye
+                        <i class="far fa-user"></i> 
+                        {% if current_lang == 'tr' %}
+                            Orta-İleri Seviye
+                        {% else %}
+                            Intermediate-Advanced Level
+                        {% endif %}
                     </span>
                 </div>
             </div>
             
             <div class="feature-card">
-                <h3><i class="fas fa-sitemap" style="color: var(--primary); margin-right: 0.5rem;"></i> Test Stratejisi ve Yönetimi</h3>
-                <p style="margin-bottom: 1rem;">Etkili test stratejileri oluşturmak, test planları geliştirmek ve test süreçlerini yönetmek için gereken becerileri kazanın. Test yönetimi araçlarını kullanmayı öğrenin.</p>
+                <h3><i class="fas fa-sitemap" style="color: var(--primary); margin-right: 0.5rem;"></i> 
+                    {% if current_lang == 'tr' %}
+                        Test Stratejisi ve Yönetimi
+                    {% else %}
+                        Test Strategy and Management
+                    {% endif %}
+                </h3>
+                <p style="margin-bottom: 1rem;">
+                    {% if current_lang == 'tr' %}
+                        Etkili test stratejileri oluşturmak, test planları geliştirmek ve test süreçlerini yönetmek için gereken becerileri kazanın. Test yönetimi araçlarını kullanmayı öğrenin.
+                    {% else %}
+                        Gain the skills needed to create effective test strategies, develop test plans, and manage testing processes. Learn to use test management tools.
+                    {% endif %}
+                </p>
                 <div>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; margin-right: 0.5rem;">
-                        <i class="far fa-clock"></i> 12 Saat
+                        <i class="far fa-clock"></i> 
+                        {% if current_lang == 'tr' %}
+                            12 Saat
+                        {% else %}
+                            12 Hours
+                        {% endif %}
                     </span>
                     <span style="background: var(--light); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem;">
-                        <i class="far fa-user"></i> İleri Seviye
+                        <i class="far fa-user"></i> 
+                        {% if current_lang == 'tr' %}
+                            İleri Seviye
+                        {% else %}
+                            Advanced Level
+                        {% endif %}
                     </span>
                 </div>
             </div>
         </div>
         
         <div style="background-color: var(--light); padding: 2rem; border-radius: 8px; margin-top: 3rem;">
-            <h3 style="text-align: center; margin-bottom: 1rem;">Özel Eğitim Talebi</h3>
-            <p style="text-align: center; margin-bottom: 1.5rem;">Ekibinizin ihtiyaçlarına özel eğitim programları için bizimle iletişime geçin.</p>
+            <h3 style="text-align: center; margin-bottom: 1rem;">
+                {% if current_lang == 'tr' %}
+                    Özel Eğitim Talebi
+                {% else %}
+                    Custom Training Request
+                {% endif %}
+            </h3>
+            <p style="text-align: center; margin-bottom: 1.5rem;">
+                {% if current_lang == 'tr' %}
+                    Ekibinizin ihtiyaçlarına özel eğitim programları için bizimle iletişime geçin.
+                {% else %}
+                    Contact us for training programs tailored to your team's needs.
+                {% endif %}
+            </p>
             <div style="text-align: center;">
-                <a href="{{ url_for('iletisim') }}" class="btn btn-primary">İletişime Geçin</a>
+                <a href="{{ url_for('iletisim') }}" class="btn btn-primary">
+                    {% if current_lang == 'tr' %}
+                        İletişime Geçin
+                    {% else %}
+                        Contact Us
+                    {% endif %}
+                </a>
             </div>
         </div>
     </div>

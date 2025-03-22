@@ -1,31 +1,192 @@
-# templates/blog_detay.html
 {% extends 'base.html' %}
 
-{% block title %}{{ blog.baslik }} - SotecAI{% endblock %}
+{% block title %}
+    {% set current_lang = session.get('lang', 'tr') %}
+    {% if current_lang == 'tr' %}
+        {{ blog.baslik }} - SotecAI
+    {% else %}
+        {% if "Trendler" in blog.baslik %}
+            Latest Trends in Test Automation - SotecAI
+        {% elif "API Testi" in blog.baslik %}
+            How to Perform Effective API Testing? - SotecAI
+        {% elif "Veri Yönetimi" in blog.baslik %}
+            Test Data Management: Challenges and Solutions - SotecAI
+        {% elif "Python" in blog.baslik %}
+            Python in Test Automation - SotecAI
+        {% else %}
+            {{ blog.baslik }} - SotecAI
+        {% endif %}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
+{% set current_lang = session.get('lang', 'tr') %}
+
 <div class="container">
     <div class="blog-detail">
         <div class="blog-header">
-            <h1>{{ blog.baslik }}</h1>
+            <h1>
+                {% if current_lang == 'tr' %}
+                    {{ blog.baslik }}
+                {% else %}
+                    {% if "Trendler" in blog.baslik %}
+                        Latest Trends in Test Automation
+                    {% elif "API Testi" in blog.baslik %}
+                        How to Perform Effective API Testing?
+                    {% elif "Veri Yönetimi" in blog.baslik %}
+                        Test Data Management: Challenges and Solutions
+                    {% elif "Python" in blog.baslik %}
+                        Python in Test Automation
+                    {% else %}
+                        {{ blog.baslik }}
+                    {% endif %}
+                {% endif %}
+            </h1>
             <div class="blog-meta">
                 <span><i class="far fa-calendar"></i> {{ blog.tarih.strftime('%d.%m.%Y') }}</span>
-                <span style="margin-left: 1rem;"><i class="far fa-user"></i> Admin</span>
+                <span style="margin-left: 1rem;"><i class="far fa-user"></i> 
+                    {% if current_lang == 'tr' %}
+                        Admin
+                    {% else %}
+                        Administrator
+                    {% endif %}
+                </span>
             </div>
             
             <div class="blog-tags">
                 {% for etiket in blog.etiketler.split(',') %}
-                <span class="tag">{{ etiket }}</span>
+                <span class="tag">
+                    {% if current_lang == 'tr' %}
+                        {{ etiket }}
+                    {% else %}
+                        {% if etiket.strip() == 'Test Otomasyonu' %}
+                            Test Automation
+                        {% elif etiket.strip() == 'API' %}
+                            API
+                        {% elif etiket.strip() == 'Python' %}
+                            Python
+                        {% elif etiket.strip() == 'Veri Yönetimi' %}
+                            Data Management
+                        {% elif etiket.strip() == 'Yazılım Testi' %}
+                            Software Testing
+                        {% elif etiket.strip() == 'Trendler' %}
+                            Trends
+                        {% elif etiket.strip() == 'Yazılım Kalitesi' %}
+                            Software Quality
+                        {% else %}
+                            {{ etiket }}
+                        {% endif %}
+                    {% endif %}
+                </span>
                 {% endfor %}
             </div>
         </div>
         
         <div class="blog-content">
-            {{ blog.icerik|safe }}
+            {% if current_lang == 'tr' %}
+                {{ blog.icerik|safe }}
+            {% else %}
+                {% if "Trendler" in blog.baslik %}
+                    <h2>Emerging Trends in Software Test Automation</h2>
+                    <p>Software testing automation has evolved significantly over recent years. In this article, we'll explore the most important trends shaping the field today.</p>
+                    
+                    <h3>1. AI-Powered Testing</h3>
+                    <p>Artificial intelligence and machine learning are revolutionizing test automation. AI can now help identify test cases, predict potential issues, and even self-heal broken tests.</p>
+                    
+                    <h3>2. Low-Code/No-Code Testing Solutions</h3>
+                    <p>The rise of low-code and no-code platforms has made test automation accessible to those without extensive programming knowledge, enabling more team members to contribute to quality assurance.</p>
+                    
+                    <h3>3. Shift-Left Testing</h3>
+                    <p>Testing is increasingly moving earlier in the development cycle, with more emphasis on prevention rather than detection of defects.</p>
+                    
+                    <h3>4. API and Microservices Testing</h3>
+                    <p>With the predominance of microservice architectures, API testing has become crucial for ensuring integration points function correctly.</p>
+                    
+                    <h3>5. DevTestOps Integration</h3>
+                    <p>Testing is now fully integrated into CI/CD pipelines, requiring automation that can keep pace with frequent deployments.</p>
+                {% elif "API Testi" in blog.baslik %}
+                    <h2>Effective API Testing Strategies</h2>
+                    <p>APIs form the backbone of modern software architecture. This guide explores comprehensive approaches to testing them effectively.</p>
+                    
+                    <h3>Understanding API Testing</h3>
+                    <p>API testing focuses on assessing the functionality, reliability, performance, and security of application programming interfaces. Unlike UI testing, API testing directly examines the business logic layer without concerning itself with the user interface.</p>
+                    
+                    <h3>Types of API Tests</h3>
+                    <ul>
+                        <li><strong>Functional testing:</strong> Verifies that the API functions as expected</li>
+                        <li><strong>Integration testing:</strong> Ensures different API components work together properly</li>
+                        <li><strong>Load testing:</strong> Evaluates how the API performs under high load</li>
+                        <li><strong>Security testing:</strong> Identifies vulnerabilities in the API</li>
+                    </ul>
+                    
+                    <h3>Key API Testing Tools</h3>
+                    <p>Several powerful tools can streamline your API testing process:</p>
+                    <ul>
+                        <li>Postman</li>
+                        <li>SoapUI</li>
+                        <li>REST Assured</li>
+                        <li>JMeter</li>
+                    </ul>
+                    
+                    <h3>Best Practices</h3>
+                    <p>Follow these guidelines to make your API testing more effective:</p>
+                    <ol>
+                        <li>Group your tests by endpoint or functionality</li>
+                        <li>Test both positive and negative scenarios</li>
+                        <li>Validate response codes, headers, and bodies</li>
+                        <li>Automate regression testing for APIs</li>
+                        <li>Include API tests in your CI/CD pipeline</li>
+                    </ol>
+                {% elif "Veri Yönetimi" in blog.baslik %}
+                    <h2>Test Data Management: Challenges and Solutions</h2>
+                    <p>Managing test data effectively is crucial for successful quality assurance. This article explores common challenges and practical solutions.</p>
+                    
+                    <h3>Common Test Data Challenges</h3>
+                    <p>Test teams frequently encounter these obstacles when managing test data:</p>
+                    <ul>
+                        <li>Creating realistic data sets that cover all test scenarios</li>
+                        <li>Maintaining data consistency across test environments</li>
+                        <li>Handling sensitive data while complying with regulations</li>
+                        <li>Synchronizing data across multiple systems</li>
+                        <li>Managing data volume and performance issues</li>
+                    </ul>
+                    
+                    <h3>Effective Solutions</h3>
+                    <h4>1. Test Data Generation</h4>
+                    <p>Utilize specialized tools to generate synthetic data that mimics production data without privacy concerns. Tools like Mockaroo and Faker can create realistic datasets quickly.</p>
+                    
+                    <h4>2. Data Virtualization</h4>
+                    <p>Implement data virtualization to create virtual copies of databases that can be used for testing without consuming storage resources.</p>
+                    
+                    <h4>3. Data Masking</h4>
+                    <p>Apply data masking techniques to obfuscate sensitive information while maintaining the data's functional utility for testing purposes.</p>
+                    
+                    <h4>4. Version Control for Test Data</h4>
+                    <p>Implement version control for your test data to track changes and enable test environment rollbacks when needed.</p>
+                    
+                    <h3>Implementing a Test Data Management Strategy</h3>
+                    <p>A comprehensive TDM strategy should include these elements:</p>
+                    <ol>
+                        <li>Data requirements analysis</li>
+                        <li>Data acquisition planning</li>
+                        <li>Storage and maintenance procedures</li>
+                        <li>Data refresh processes</li>
+                        <li>Access control and security measures</li>
+                    </ol>
+                {% else %}
+                    {{ blog.icerik|safe }}
+                {% endif %}
+            {% endif %}
         </div>
         
         <div style="margin-top: 3rem;">
-            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Tüm Bloglar</a>
+            <a href="{{ url_for('blog_listesi') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> 
+                {% if current_lang == 'tr' %}
+                    Tüm Bloglar
+                {% else %}
+                    All Blogs
+                {% endif %}
+            </a>
         </div>
     </div>
 </div>
