@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if session['lang'] == 'en' %}
+        Bilgecan - SotecAI Virtual Assistant
+    {% else %}
+        Bilgecan - SotecAI Sanal Asistanı
+    {% endif %}
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bilgecan.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="chat-header">
+        <div class="chat-header-icon">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="chat-header-text">
+            <h1>Bilgecan</h1>
+            <p>
+                {% if session['lang'] == 'en' %}
+                    SotecAI's software testing virtual assistant
+                {% else %}
+                    SotecAI'nin yazılım test uzmanı sanal asistanı
+                {% endif %}
+            </p>
+        </div>
+        <div class="theme-selector">
+            <div class="theme-option theme-blue active" data-theme="blue"></div>
+            <div class="theme-option theme-purple" data-theme="purple"></div>
+            <div class="theme-option theme-green" data-theme="green"></div>
+            <div class="theme-option theme-orange" data-theme="orange"></div>
+        </div>
+    </div>
+    
+    <div class="chat-messages" id="chat-messages">
+        <div class="message bot">
+            <div class="message-content">
+                <div class="bot-avatar"><i class="fas fa-robot"></i></div>
+                <span>{% if session['lang'] == 'en' %}
+                    Hello, I'm Bilgecan! I'm here to help you with software testing and automation questions. How can I assist you today?
+                {% else %}
+                    Merhaba, ben Bilgecan! Yazılım testi ve otomasyon konularında sorularınızı yanıtlamak için buradayım. Size nasıl yardımcı olabilirim?
+                {% endif %}</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="chat-input-container">
+        <input type="text" id="user-message" class="chat-input" 
+            {% if session['lang'] == 'en' %}
+                placeholder="Ask me a question..."
+            {% else %}
+                placeholder="Bir soru sorun..."
+            {% endif %}
+        >
+        <button class="chat-send-button" id="send-button">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Sayfa yüklendi, JavaScript çalışıyor");
+        
+        const chatMessages = document.getElementById('chat-messages');
+        const userMessage = document.getElementById('user-message');
+        const sendButton = document.getElementById('send-button');
+        
+        // Session ID oluştur
+        const sessionId = Math.random().toString(36).substring(2, 15);
+        console.log("Session ID:", sessionId);
+        
+        // Mesaj ekleyen fonksiyon
+        function addMessage(content, isUser) {
+            console.log(`Mesaj ekleniyor: ${isUser ? 'Kullanıcı' : 'Bot'} - ${content.substring(0, 30)}...`);
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = isUser ? 'message user' : 'message bot';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            if (!isUser) {
+                const avatar = document.createElement('div');
+                avatar.className = 'bot-avatar';
+                avatar.innerHTML = '<i class="fas fa-robot"></i>';
+                contentDiv.appendChild(avatar);
+            }
+            
+            contentDiv.innerHTML += content.replace(/\n/g, '<br>');
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Aşağı kaydır
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Mesaj gönderme fonksiyonu
+        function sendMessage() {
+            const message = userMessage.value.trim();
+            if (!message) return;
+            
+            console.log("Kullanıcı mesajı:", message);
+            
+            // Kullanıcı mesajını ekle
+            addMessage(message, true);
+            
+            // Input alanını temizle
+            userMessage.value = '';
+            
+            // Yükleniyor mesajı
+            const loadingMsg = "Yanıt yükleniyor...";
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message bot';
+            loadingDiv.innerHTML = `<div class="message-content"><div class="bot-avatar"><i class="fas fa-spinner fa-spin"></i></div>${loadingMsg}</div>`;
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // API isteği
+            console.log("API isteği gönderiliyor");
+            fetch('/api/bilgecan/mesaj', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    soru: message,
+                    session_id: sessionId
+                }),
+            })
+            .then(response => {
+                console.log("API yanıtı alındı, durum kodu:", response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log("API veri yanıtı:", data);
+                
+                // Yükleniyor mesajını kaldır
+                chatMessages.removeChild(loadingDiv);
+                
+                // Bot cevabını ekle
+                addMessage(data.cevap || "Üzgünüm, bir yanıt alamadım.", false);
+            })
+            .catch(error => {
+                console.error("API hatası:", error);
+                
+                // Yükleniyor mesajını kaldır
+                chatMessages.removeChild(loadingDiv);
+                
+                // Hata mesajı ekle
+                addMessage("Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.", false);
+            });
+        }
+        
+        // Event listener'ları ekle
+        sendButton.addEventListener('click', function() {
+            console.log("Gönder butonuna tıklandı");
+            sendMessage();
+        });
+        
+        userMessage.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                console.log("Enter tuşuna basıldı");
+                sendMessage();
+            }
+        });
+        
+        // Test amaçlı konsoldan çağrılabilir
+        window.testMessage = function(msg) {
+            userMessage.value = msg || "Test mesajı";
+            sendMessage();
+        };
+        
+        console.log("JavaScript kurulumu tamamlandı");
+    });
+    
+</script>
+{% endblock %}

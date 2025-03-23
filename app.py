@@ -38,6 +38,138 @@ def get_locale():
 # Assign the function directly instead of using a decorator
 babel.locale_selector_func = get_locale
 
+import requests
+import os
+import json
+
+def ai_servis_cagir(soru, dil='tr'):
+    """
+    AI servisi ile iletişim kurup cevap alan fonksiyon
+    API anahtarı yoksa veya hata durumunda basit yanıtlarla çalışır
+    """
+    api_key = os.environ.get('ANTHROPIC_API_KEY', '')
+    print(f"API anahtarı var mı: {'Evet' if api_key else 'Hayır'}")
+    
+    # Basit yanıtlar her durumda çalışır
+    try:
+        # API anahtarı yoksa basit yanıtlarla devam et
+        if not api_key:
+            print("API anahtarı olmadığı için basit yanıt döndürülüyor")
+            return basit_cevap_uret(soru, dil)
+        
+        # Yazılım testi konusunda özel bilgi içeren prompt
+        if dil == 'tr':
+            sistem_mesaji = """Sen SotecAI'nin yazılım test uzmanı sanal asistanı Bilgecan'sın. 
+            Yazılım testi, test otomasyonu, kalite güvence, CI/CD ve DevOps konularında uzmansın.
+            İnsanlara yazılım test süreçleri, araçları ve en iyi uygulamalar hakkında yardımcı oluyorsun.
+            Cevapların kısa, net ve bilgilendirici olmalı.
+            Konuyla ilgili pratik öneriler ve çözümler sunmaya çalış."""
+        else:
+            sistem_mesaji = """You are Bilgecan, the software testing virtual assistant of SotecAI.
+            You are an expert in software testing, test automation, quality assurance, CI/CD, and DevOps.
+            You help people with software testing processes, tools, and best practices.
+            Your answers should be concise, clear, and informative.
+            Try to provide practical suggestions and solutions about the topic."""
+        
+        try:
+            # Claude API çağrısı
+            print("Claude API çağrısı yapılıyor...")
+            response = requests.post(
+                "https://api.anthropic.com/v1/messages",
+                headers={
+                    "x-api-key": api_key,
+                    "anthropic-version": "2023-06-01",
+                    "content-type": "application/json"
+                },
+                json={
+                    "model": "claude-3-haiku-20240307",
+                    "system": sistem_mesaji,
+                    "messages": [
+                        {"role": "user", "content": soru}
+                    ],
+                    "max_tokens": 500
+                },
+                timeout=15
+            )
+            
+            print(f"API yanıt durumu: {response.status_code}")
+            result = response.json()
+            return result['content'][0]['text']
+        
+        except Exception as e:
+            print(f"Claude API hatası: {str(e)}")
+            return basit_cevap_uret(soru, dil)
+    
+    except Exception as e:
+        print(f"Genel AI servis hatası: {str(e)}")
+        # Herhangi bir durumda basit yanıtlar ile geri dön
+        return basit_cevap_uret(soru, dil)
+
+def basit_cevap_uret(soru, dil='tr'):
+    """
+    API bağlantısı olmadığında veya hata durumunda basit yanıtlar döndürür
+    """
+    print(f"Basit cevap üretiliyor. Soru: {soru[:30]}...")
+    
+    # Soru içeriğine göre anahtar kelime ve yanıtlar
+    anahtar_kelimeler = {
+        'selenium': {
+            'tr': 'Selenium, web uygulamalarını test etmek için kullanılan popüler bir araçtır. Tarayıcı otomasyonu sağlar ve birçok programlama diliyle kullanılabilir.',
+            'en': 'Selenium is a popular tool for testing web applications. It provides browser automation and can be used with many programming languages.'
+        },
+        'api test': {
+            'tr': 'API testleri, yazılım bileşenleri arasındaki iletişimi doğrulamak için önemlidir. Postman, REST Assured gibi araçlar kullanabilirsiniz.',
+            'en': 'API testing is crucial for verifying communication between software components. You can use tools like Postman, REST Assured.'
+        },
+        'performans': {
+            'tr': 'Performans testleri için JMeter, Gatling gibi araçlar kullanabilirsiniz. Yük testi, stres testi ve dayanıklılık testi gibi farklı türleri vardır.',
+            'en': 'For performance testing, you can use tools like JMeter, Gatling. There are different types such as load testing, stress testing, and endurance testing.'
+        },
+        'test otomasyonu': {
+            'tr': 'Test otomasyonu, tekrarlayan testleri otomatikleştirerek zaman kazandırır. Framework seçimi, bakım maliyetleri ve test kapsamını dengelemelisiniz.',
+            'en': 'Test automation saves time by automating repetitive tests. You should balance framework selection, maintenance costs, and test coverage.'
+        },
+        'merhaba': {
+            'tr': 'Merhaba! Ben Bilgecan, yazılım testi konusunda sorularınızı yanıtlamak için buradayım. Size nasıl yardımcı olabilirim?',
+            'en': 'Hello! I am Bilgecan, here to answer your questions about software testing. How can I help you?'
+        },
+        'pytest': {
+            'tr': 'Pytest, Python için en popüler test frameworklerinden biridir. Basit sözdizimi, zengin eklenti ekosistemi ve test fixture\'ları ile bilinir.',
+            'en': 'Pytest is one of the most popular testing frameworks for Python. It is known for its simple syntax, rich plugin ecosystem, and test fixtures.'
+        },
+        'ci/cd': {
+            'tr': 'CI/CD (Sürekli Entegrasyon/Sürekli Dağıtım), yazılım geliştirme süreçlerini otomatikleştiren bir yaklaşımdır. Jenkins, GitLab CI, GitHub Actions gibi araçları kullanabilirsiniz.',
+            'en': 'CI/CD (Continuous Integration/Continuous Delivery) is an approach that automates software development processes. You can use tools like Jenkins, GitLab CI, GitHub Actions.'
+        }
+    }
+    
+    soru_kucuk = soru.lower()
+    
+    # Soru içeriğine göre anahtar kelime taraması
+    for kelime, cevaplar in anahtar_kelimeler.items():
+        if kelime.lower() in soru_kucuk:
+            return cevaplar[dil]
+    
+    # Eşleşme bulunamazsa genel yanıt
+    genel_yanitlar = {
+        'tr': [
+            "Yazılım testi hakkında sorularınızı yanıtlamaktan memnuniyet duyarım. Daha spesifik bir soru sorabilir misiniz?",
+            "Yazılım kalite süreçleri hakkında bilgi almak için daha açık bir soru sormanız yardımcı olabilir.",
+            "Test otomasyonu, manuel test, performans testi veya güvenlik testi gibi belirli bir alan hakkında soru sorabilirsiniz.",
+            "Size yardımcı olmak için buradayım. Selenium, JUnit, TestNG, Cypress gibi test araçları hakkında sorular sorabilirsiniz."
+        ],
+        'en': [
+            "I'm happy to answer your questions about software testing. Could you ask a more specific question?",
+            "For information about software quality processes, asking a more specific question would be helpful.",
+            "You can ask about specific areas like test automation, manual testing, performance testing, or security testing.",
+            "I'm here to help. You can ask questions about testing tools like Selenium, JUnit, TestNG, or Cypress."
+        ]
+    }
+    
+    # Rastgele bir genel yanıt seç
+    import random
+    return random.choice(genel_yanitlar[dil])
+
 @app.route('/set_language/<language>')
 def set_language(language):
     if language in app.config['BABEL_SUPPORTED_LOCALES']:
@@ -81,6 +213,17 @@ class Yorum(db.Model):
     # Relationships
     blog = db.relationship('Blog', backref='yorumlar')
     kullanici = db.relationship('Kullanici', backref='yorumlar')
+
+class ChatMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    kullanici_id = db.Column(db.Integer, db.ForeignKey('kullanici.id'), nullable=True, index=True)
+    session_id = db.Column(db.String(100), nullable=False, index=True)  # Anonim kullanıcılar için
+    soru = db.Column(db.Text, nullable=False)
+    cevap = db.Column(db.Text, nullable=False)
+    tarih = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    
+    # İlişki
+    kullanici = db.relationship('Kullanici', backref='chat_mesajlari')
 
 class Arac(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -506,6 +649,76 @@ def cikis():
     flash(_('Başarıyla çıkış yaptınız!'), 'success')
     return redirect(url_for('anasayfa'))
 
+@app.route('/bilgecan')
+def bilgecan_chat():
+    return render_template('bilgecan.html')
+
+@app.route('/api/bilgecan/mesaj', methods=['POST'])
+def bilgecan_mesaj():
+    """
+    Basit test API'si - herhangi bir harici servise bağlı değil
+    """
+    print("API endpoint çağrıldı!")
+    try:
+        # Gelen veriyi al
+        data = request.get_json()
+        print("Gelen veri:", data)
+        
+        if not data:
+            print("JSON verileri alınamadı")
+            return jsonify({'cevap': 'Veri alınamadı. Lütfen geçerli bir JSON gönderiniz.'}), 400
+        
+        soru = data.get('soru', '')
+        session_id = data.get('session_id', '')
+        
+        if not soru:
+            return jsonify({'cevap': 'Lütfen bir soru sorun.'}), 400
+        
+        print(f"Soru alındı: {soru}, Session ID: {session_id}")
+        
+        # Basit yanıt oluştur - servis çağrılarıyla uğraşma
+        basit_yanitlar = {
+            'selam': 'Merhaba! Size nasıl yardımcı olabilirim?',
+            'merhaba': 'Merhaba! Yazılım testi konusunda sorularınızı yanıtlamaya hazırım.',
+            'test': 'Test otomasyonu, süreçlerinizi hızlandırmanın en iyi yollarından biridir. Selenium, Cypress, JUnit gibi araçlar kullanabilirsiniz.',
+            'selenium': 'Selenium, web uygulamalarını test etmek için en popüler açık kaynak araçlarından biridir.',
+            'python': 'Python, test otomasyonu için harika bir dildir. Pytest, Robot Framework gibi güçlü test frameworkleri sunar.',
+            'api': 'API testleri için Postman, REST Assured veya Python\'da requests kütüphanesi kullanabilirsiniz.'
+        }
+        
+        # Basit kelime eşleştirme yaparak yanıt oluştur
+        yanit = "Sorunuzu aldım. İlgili konuda size şunları söyleyebilirim: "
+        
+        for anahtar, deger in basit_yanitlar.items():
+            if anahtar.lower() in soru.lower():
+                yanit = deger
+                break
+        else:
+            yanit = "Yazılım testi hakkında nasıl yardımcı olabilirim? Örneğin, test otomasyonu, API testleri veya Selenium hakkında sorular sorabilirsiniz."
+        
+        # Veritabanına kaydedebiliriz - ancak bu isteğe bağlı
+        try:
+            kullanici_id = session.get('kullanici_id')
+            yeni_mesaj = ChatMessage(
+                kullanici_id=kullanici_id,
+                session_id=session_id,
+                soru=soru,
+                cevap=yanit
+            )
+            db.session.add(yeni_mesaj)
+            db.session.commit()
+            print("Mesaj veritabanına kaydedildi")
+        except Exception as e:
+            print(f"Veritabanı hatası: {str(e)}")
+            # Hata durumunda işlemi geri al ama yanıt vermeye devam et
+            db.session.rollback()
+        
+        # API yanıtı
+        return jsonify({'cevap': yanit})
+        
+    except Exception as e:
+        print(f"API genel hatası: {str(e)}")
+        return jsonify({'cevap': 'Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.'}), 500
 # Error handlers
 @app.errorhandler(404)
 def page_not_found(e):
@@ -544,7 +757,13 @@ def ortak_veriler():
                 'iletisim': 'İletişim',
                 'giris': 'Giriş',
                 'cikis': 'Çıkış',
-                'kayit': 'Üye Ol'
+                'kayit': 'Üye Ol',
+                'bilgecan': 'Bilgecan',
+                'bilgecan_slogan': 'SotecAI\'nin yazılım test uzmanı sanal asistanı',
+                'soru_sor': 'Bir soru sorun...',
+                'gonder': 'Gönder',
+                'dusunuyor': 'Bilgecan düşünüyor...',
+                'hata': 'Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.'
             },
             'en': {
                 'anasayfa': 'Home',
@@ -555,7 +774,13 @@ def ortak_veriler():
                 'iletisim': 'Contact',
                 'giris': 'Login',
                 'cikis': 'Logout',
-                'kayit': 'Sign Up'
+                'kayit': 'Sign Up',
+                'bilgecan': 'Bilgecan',
+                'bilgecan_slogan': 'SotecAI\'s software testing virtual assistant',
+                'soru_sor': 'Ask a question...',
+                'gonder': 'Send',
+                'dusunuyor': 'Bilgecan is thinking...',
+                'hata': 'Sorry, an error occurred. Please try again.'
             }
         }
     }
@@ -567,5 +792,4 @@ with app.app_context():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    debug = os.environ.get('FLASK_ENV') == 'development'
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    app.run(host='0.0.0.0', port=port, debug=True)  # Debug modunu zorla açık yapın

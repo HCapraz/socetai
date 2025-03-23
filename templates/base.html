@@ -1058,6 +1058,481 @@
             color: var(--dark);
             font-style: italic;
         }
+
+/* Bilgecan Navigasyon İyileştirmeleri - Final Versiyon */
+
+/* Aktif menü öğesi göstergesi */
+.nav-links a.active {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.nav-links a.active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #1e3a8a;
+    margin-top: 4px;
+    border-radius: 2px;
+}
+
+/* Bilgecan öğesini özelleştir */
+.nav-links a[href*="bilgecan"] {
+    color: #1e3a8a;
+    background-color: rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    transition: all 0.3s;
+    padding: 0.5rem 0.75rem;
+}
+
+.nav-links a[href*="bilgecan"]:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.nav-links a[href*="bilgecan"] i {
+    margin-right: 4px;
+    color: #fff;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    font-size: 1.1em;
+}
+
+/* Genel menü iyileştirmeleri */
+.navbar {
+    padding: 0.75rem 0;
+}
+
+.nav-links li {
+    margin-left: 1.25rem;
+}
+
+.nav-links a:not(.btn):not([href*="bilgecan"]):hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: none;
+}
+
+/* Üye Ol butonu */
+.nav-right .btn-primary {
+    background: linear-gradient(45deg, #3b82f6, #2563eb);
+    border: none;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    transition: all 0.3s;
+    font-weight: 700;
+}
+
+.nav-right .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* DİL SEÇİMİ DÜZELTME - önce önceki değişiklikleri sıfırla */
+.language-selector {
+    position: relative;
+    display: flex !important; /* Görünürlüğü zorla */
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+/* Dil seçimi toggle butonu */
+.language-toggle {
+    display: flex !important;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+/* Dil dropdown'u görünür yap */
+.language-dropdown {
+    display: none; /* Normal durumda gizli */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 120px;
+}
+
+/* Geniş ekranda nav-right göster */
+.nav-right {
+    display: flex !important;
+    align-items: center;
+}
+
+/* Bilgecan Navigasyon İyileştirmeleri - Buton Düzeltme */
+
+/* Önceki CSS kodlarını koruyun, sadece aşağıdakileri ekleyin/değiştirin */
+
+/* Giriş ve Üye Ol butonları düzeltmesi */
+.nav-links a[href*="giris"] {
+    margin-right: 20px !important; /* Giriş ve Üye Ol arasına boşluk */
+    position: relative;
+    display: inline-block !important;
+    background-color: transparent !important;
+}
+
+/* Üye Ol butonunu konumlandırma */
+.nav-right .btn-primary {
+    display: inline-block !important;
+    margin-left: 15px !important;
+    position: relative !important;
+    background: linear-gradient(45deg, #3b82f6, #2563eb);
+    border: none;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    transition: all 0.3s;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+}
+
+/* Dil seçimi düzeltme */
+.language-selector {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    margin-left: 25px !important; /* Üye Ol ile Dil Seçimi arasına boşluk ekle */
+}
+
+/* Nav-right içindeki elementlerin düzgün hizalanması */
+.nav-right {
+    display: flex !important;
+    align-items: center;
+    gap: 10px; /* Elemanlar arasında boşluk */
+    margin-left: auto; /* Sağa yasla */
+    padding-right: 15px; /* Sağdan boşluk */
+}
+
+/* Küçük ekranlar için ek düzeltmeler */
+@media (max-width: 992px) {
+    .nav-links a[href*="giris"] {
+        display: block !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .language-selector {
+        margin-top: 10px !important;
+    }
+}
+
+/* Bilgecan Sayfası İyileştirmeleri */
+
+/* Ana sayfa container */
+.chat-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: auto !important; /* Otomatik yükseklik */
+    min-height: 500px !important; /* Minimum yükseklik */
+    max-height: 80vh !important; /* Maksimum görünür yükseklik */
+}
+
+/* Başlık alanı */
+.chat-header {
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header-icon {
+    font-size: 2.5rem;
+    background: white;
+    color: #3b82f6;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: pulse 2s infinite;
+}
+
+.chat-header-text {
+    flex: 1;
+}
+
+.chat-header-text h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.chat-header-text p {
+    margin: 0.3rem 0 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Mesaj alanı */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    max-height: 350px !important; /* Mesaj alanının maksimum yüksekliği */
+}
+
+
+/* Mesaj balonları */
+.message {
+    margin-bottom: 1.5rem;
+    max-width: 80%;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.message.bot {
+    margin-right: auto;
+}
+
+.message.user {
+    margin-left: auto;
+}
+
+.message-content {
+    padding: 1rem 1.25rem;
+    border-radius: 18px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    line-height: 1.5;
+}
+
+.bot .message-content {
+    background: white;
+    color: #1e293b;
+    border-bottom-left-radius: 4px;
+}
+
+.bot .message-content::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 0 0 20px 0;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.user .message-content {
+    background: #3b82f6;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.user .message-content::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: #3b82f6;
+    border-radius: 0 0 0 20px;
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+/* Bot avatarı */
+.bot-avatar {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    background: #e0e7ff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    font-size: 18px;
+    color: #3b82f6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Giriş alanı */
+.chat-input-container {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0 0 20px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.chat-input {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 24px;
+    padding: 0.8rem 1.25rem;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+    background: #f9fafb;
+}
+
+.chat-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    background: white;
+}
+
+.chat-input::placeholder {
+    color: #9ca3af;
+}
+
+.chat-send-button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    margin-left: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+}
+
+.chat-send-button:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+}
+
+.chat-send-button:active {
+    transform: translateY(0);
+}
+
+.chat-send-button i {
+    font-size: 1.25rem;
+}
+
+/* Yükleniyor animasyonu */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 1px;
+    background-color: #3b82f6;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: typingAnimation 1.5s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.3s; }
+.typing-dot:nth-child(3) { animation-delay: 0.6s; }
+
+/* Tema seçenekleri */
+.theme-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+}
+
+.theme-option {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.theme-option.active {
+    transform: scale(1.2);
+    border-color: white;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.theme-option:hover {
+    transform: scale(1.1);
+}
+
+.theme-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.theme-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+.theme-green { background: linear-gradient(135deg, #10b981, #059669); }
+.theme-orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+/* Animasyonlar */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+@keyframes typingAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Mobil Responsive */
+@media (max-width: 768px) {
+    .chat-container {
+        margin: 1rem;
+        height: calc(100vh - 150px);
+    }
+    
+    .message {
+        max-width: 90%;
+    }
+    
+    .chat-header-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+    }
+    
+    .chat-header-text h1 {
+        font-size: 1.5rem;
+    }
+    
+    .chat-header-text p {
+        font-size: 0.9rem;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1094,6 +1569,18 @@
                     <li><a href="{{ url_for('iletisim') }}" {% if request.path == url_for('iletisim') %}class="active"{% endif %}>
                         {{ tr_en[current_lang]['iletisim'] }}
                     </a></li>
+
+                    <!-- Navigasyon menünüzdeki diğer linklerle birlikte bu kodu ekleyin -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('bilgecan_chat') }}">
+                            <i class="fas fa-robot mr-1"></i>
+                            {% if session['lang'] == 'en' %}
+                                Bilgecan
+                            {% else %}
+                                Bilgecan
+                            {% endif %}
+                        </a>
+                    </li>
                     
                     {% if kullanici_giris_yapti_mi() %}
                         <li><a href="{{ url_for('cikis') }}">{{ tr_en[current_lang]['cikis'] }}</a></li>
@@ -1307,5 +1794,39 @@
             }
         });
     </script>
+
+<!-- Bu kodu base.html şablonunuzda, </body> tag'inden hemen önce ekleyin -->
+<div id="chat-floating-button">
+    <a href="{{ url_for('bilgecan_chat') }}" class="btn btn-primary rounded-circle shadow">
+        <i class="fas fa-comments"></i>
+    </a>
+</div>
+
+<style>
+    #chat-floating-button {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
+    
+    #chat-floating-button .btn {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+    
+    #chat-floating-button .btn:hover {
+        transform: scale(1.1);
+    }
+    
+    #chat-floating-button i {
+        font-size: 24px;
+    }
+</style>
 </body>
 </html>
