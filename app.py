@@ -655,9 +655,6 @@ def bilgecan_chat():
 
 @app.route('/api/bilgecan/mesaj', methods=['POST'])
 def bilgecan_mesaj():
-    """
-    Basit test API'si - herhangi bir harici servise bağlı değil
-    """
     print("API endpoint çağrıldı!")
     try:
         # Gelen veriyi al
@@ -676,27 +673,11 @@ def bilgecan_mesaj():
         
         print(f"Soru alındı: {soru}, Session ID: {session_id}")
         
-        # Basit yanıt oluştur - servis çağrılarıyla uğraşma
-        basit_yanitlar = {
-            'selam': 'Merhaba! Size nasıl yardımcı olabilirim?',
-            'merhaba': 'Merhaba! Yazılım testi konusunda sorularınızı yanıtlamaya hazırım.',
-            'test': 'Test otomasyonu, süreçlerinizi hızlandırmanın en iyi yollarından biridir. Selenium, Cypress, JUnit gibi araçlar kullanabilirsiniz.',
-            'selenium': 'Selenium, web uygulamalarını test etmek için en popüler açık kaynak araçlarından biridir.',
-            'python': 'Python, test otomasyonu için harika bir dildir. Pytest, Robot Framework gibi güçlü test frameworkleri sunar.',
-            'api': 'API testleri için Postman, REST Assured veya Python\'da requests kütüphanesi kullanabilirsiniz.'
-        }
+        # AI servisini çağır (önceki statik yanıt yerine bu satırı ekleyin)
+        current_lang = session.get('lang', 'tr')
+        yanit = ai_servis_cagir(soru, current_lang)
         
-        # Basit kelime eşleştirme yaparak yanıt oluştur
-        yanit = "Sorunuzu aldım. İlgili konuda size şunları söyleyebilirim: "
-        
-        for anahtar, deger in basit_yanitlar.items():
-            if anahtar.lower() in soru.lower():
-                yanit = deger
-                break
-        else:
-            yanit = "Yazılım testi hakkında nasıl yardımcı olabilirim? Örneğin, test otomasyonu, API testleri veya Selenium hakkında sorular sorabilirsiniz."
-        
-        # Veritabanına kaydedebiliriz - ancak bu isteğe bağlı
+        # Veritabanına kaydet
         try:
             kullanici_id = session.get('kullanici_id')
             yeni_mesaj = ChatMessage(
@@ -710,7 +691,6 @@ def bilgecan_mesaj():
             print("Mesaj veritabanına kaydedildi")
         except Exception as e:
             print(f"Veritabanı hatası: {str(e)}")
-            # Hata durumunda işlemi geri al ama yanıt vermeye devam et
             db.session.rollback()
         
         # API yanıtı
