@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for, flash, session, g
+from flask import Flask, render_template, request, redirect, url_for, flash, session, g, jsonify 
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
@@ -655,15 +655,11 @@ def bilgecan_chat():
 
 @app.route('/api/bilgecan/mesaj', methods=['POST'])
 def bilgecan_mesaj():
-    print("API endpoint çağrıldı!")
+    print("ORJINAL Bilgecan API çağrıldı!", flush=True)
     try:
         # Gelen veriyi al
         data = request.get_json()
-        print("Gelen veri:", data)
-        
-        if not data:
-            print("JSON verileri alınamadı")
-            return jsonify({'cevap': 'Veri alınamadı. Lütfen geçerli bir JSON gönderiniz.'}), 400
+        print("Gelen veri:", data, flush=True)
         
         soru = data.get('soru', '')
         session_id = data.get('session_id', '')
@@ -671,11 +667,11 @@ def bilgecan_mesaj():
         if not soru:
             return jsonify({'cevap': 'Lütfen bir soru sorun.'}), 400
         
-        print(f"Soru alındı: {soru}, Session ID: {session_id}")
+        print(f"Soru alındı: {soru}, Session ID: {session_id}", flush=True)
         
-        # AI servisini çağır (önceki statik yanıt yerine bu satırı ekleyin)
+        # AI servisi çağır
         current_lang = session.get('lang', 'tr')
-        yanit = ai_servis_cagir(soru, current_lang)
+        cevap = ai_servis_cagir(soru, current_lang)
         
         # Veritabanına kaydet
         try:
@@ -684,7 +680,7 @@ def bilgecan_mesaj():
                 kullanici_id=kullanici_id,
                 session_id=session_id,
                 soru=soru,
-                cevap=yanit
+                cevap=cevap
             )
             db.session.add(yeni_mesaj)
             db.session.commit()
@@ -694,19 +690,109 @@ def bilgecan_mesaj():
             db.session.rollback()
         
         # API yanıtı
-        return jsonify({'cevap': yanit})
+        print("Yanıt gönderiliyor")
+        return jsonify({'cevap': cevap})
         
     except Exception as e:
-        print(f"API genel hatası: {str(e)}")
+        print(f"API genel hatası: {str(e)}", flush=True)
+        import traceback
+        traceback.print_exc()
         return jsonify({'cevap': 'Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.'}), 500
-# Error handlers
+    
+    @app.route('/api/test', methods=['GET'])
+    def api_test():
+        print("API test endpointi çağrıldı!", flush=True)
+    return jsonify({"status": "success", "message": "API çalışıyor!"})
+
+@app.route('/api/simple', methods=['GET'])
+def simple_api():
+    print("Basit API çağrıldı!", flush=True)
+    return jsonify({"success": True, "message": "API çalışıyor!"})
+
+@app.route('/debug-log')
+def debug_log():
+    print("DEBUG LOG ÇAĞRILDI! Bu mesaj konsola yazılmalı!", flush=True)
+    return "Debug log konsola yazıldı. Konsolu kontrol edin."
+
+@app.route('/test')
+def test_page():
+    print("Test sayfası çağrıldı!", flush=True)
+    return render_template('test.html')
+
+@app.route('/api/test-message', methods=['POST'])
+def test_message():
+    print("Test message API çağrıldı!", flush=True)
+    try:
+        data = request.get_json()
+        message = data.get('message', '')
+        print(f"Alınan mesaj: {message}", flush=True)
+        
+        response = f"Mesajınızı aldım: '{message}'"
+        print(f"Gönderilen yanıt: {response}", flush=True)
+        
+        return jsonify({"response": response})
+    except Exception as e:
+        print(f"Hata: {str(e)}", flush=True)
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+@app.route('/bilgecan-simple')
+def bilgecan_simple():
+    print("Basit Bilgecan sayfası çağrıldı!", flush=True)
+    return render_template('bilgecan_simple.html')  # GİRİNTİ DÜZELTİLDİ
+
+@app.route('/bilgecan-test')
+def bilgecan_test():
+    return render_template('bilgecan_test.html')
+
+@app.route('/api/bilgecan-simple', methods=['POST'])
+def bilgecan_simple_api():
+    print("Bilgecan simple API çağrıldı!", flush=True)
+    try:
+        data = request.get_json()
+        print(f"Gelen veri: {data}", flush=True)
+        
+        soru = data.get('soru', '')
+        session_id = data.get('session_id', '')
+        
+        print(f"Soru: {soru}, Session ID: {session_id}", flush=True)
+        
+        # Basit cevap yerine AI servisi kullan
+        current_lang = session.get('lang', 'tr')
+        cevap = ai_servis_cagir(soru, current_lang)
+        print(f"AI servis yanıtı oluşturuldu: {cevap[:50]}...", flush=True)
+        
+        # Veritabanına kaydet
+        try:
+            kullanici_id = session.get('kullanici_id')
+            yeni_mesaj = ChatMessage(
+                kullanici_id=kullanici_id,
+                session_id=session_id,
+                soru=soru,
+                cevap=cevap
+            )
+            db.session.add(yeni_mesaj)
+            db.session.commit()
+            print("Mesaj veritabanına kaydedildi")
+        except Exception as e:
+            print(f"Veritabanı hatası: {str(e)}")
+            db.session.rollback()
+        
+        print(f"Gönderilen cevap: {cevap[:50]}...", flush=True)
+        return jsonify({"cevap": cevap})
+    except Exception as e:
+        print(f"Hata: {str(e)}", flush=True)
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e), "cevap": "Bir hata oluştu"}), 500
+
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('errors/404.html'), 404
+    return "404 Sayfa Bulunamadı", 404
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('errors/500.html'), 500
+    return "500 Sunucu Hatası", 500
 
 # Template context processor
 @app.context_processor

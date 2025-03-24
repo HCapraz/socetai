@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test Sayfası</h1>
+    <p>Bu sayfa API iletişimini test etmek için kullanılır.</p>
+    
+    <div>
+        <input type="text" id="message" placeholder="Bir mesaj yazın">
+        <button id="send">Gönder</button>
+    </div>
+    
+    <div id="response" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+    
+    <script>
+        document.getElementById('send').addEventListener('click', function() {
+            var message = document.getElementById('message').value;
+            document.getElementById('response').innerHTML = 'Gönderiliyor...';
+            
+            fetch('/api/test-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerHTML = 'Yanıt: ' + data.response;
+            })
+            .catch(error => {
+                document.getElementById('response').innerHTML = 'Hata: ' + error;
+            });
+        });
+    </script>
+</body>
+</html>

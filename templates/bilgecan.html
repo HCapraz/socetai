@@ -8,11 +8,6 @@
     {% endif %}
 {% endblock %}
 
-{% block styles %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bilgecan.css') }}">
-{% endblock %}
-
 {% block content %}
 <div class="chat-container">
     <div class="chat-header">
@@ -63,69 +58,304 @@
         </button>
     </div>
 </div>
-{% endblock %}
 
-{% block scripts %}
+<style>
+    /* Modern Chat Interface Styling */
+    .chat-container {
+        max-width: 1000px;
+        margin: 2rem auto 4rem;
+        background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 600px;
+    }
+
+    /* Chat Header */
+    .chat-header {
+        background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        color: white;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    .chat-header-icon {
+        font-size: 2.5rem;
+        background: white;
+        color: #3b82f6;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+    }
+
+    .chat-header-text {
+        flex: 1;
+    }
+
+    .chat-header-text h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .chat-header-text p {
+        margin: 0.3rem 0 0;
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    /* Theme Selector */
+    .theme-selector {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+
+    .theme-option {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+    }
+
+    .theme-option:hover {
+        transform: scale(1.1);
+    }
+
+    .theme-option.active {
+        transform: scale(1.2);
+        border-color: white;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+
+    .theme-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .theme-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+    .theme-green { background: linear-gradient(135deg, #10b981, #059669); }
+    .theme-orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+    /* Messages Area */
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        min-height: 350px;
+    }
+
+    /* Message Styles */
+    .message {
+        margin-bottom: 1.5rem;
+        max-width: 80%;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.bot {
+        margin-right: auto;
+    }
+
+    .message.user {
+        margin-left: auto;
+    }
+
+    .message-content {
+        padding: 1rem 1.25rem;
+        border-radius: 18px;
+        position: relative;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        line-height: 1.5;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .bot .message-content {
+        background: white;
+        color: #1e293b;
+        border-bottom-left-radius: 4px;
+    }
+
+    .user .message-content {
+        background: #3b82f6;
+        color: white;
+        border-bottom-right-radius: 4px;
+        justify-content: flex-end;
+    }
+
+    .bot-avatar {
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        margin-right: 10px;
+        background: #e0e7ff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 35px;
+        font-size: 18px;
+        color: #3b82f6;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+
+    /* Input Area */
+    .chat-input-container {
+        padding: 1.25rem;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .chat-input {
+        flex: 1;
+        border: 1px solid #d1d5db;
+        border-radius: 24px;
+        padding: 0.8rem 1.25rem;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s;
+        background: #f9fafb;
+    }
+
+    .chat-input:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        background: white;
+    }
+
+    .chat-send-button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 46px;
+        height: 46px;
+        margin-left: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+    }
+
+    .chat-send-button:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+    }
+
+    .chat-send-button:active {
+        transform: translateY(0);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .chat-container {
+            margin: 1rem;
+            min-height: 500px;
+        }
+        
+        .message {
+            max-width: 90%;
+        }
+        
+        .chat-header-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 2rem;
+        }
+        
+        .chat-header-text h1 {
+            font-size: 1.5rem;
+        }
+        
+        .chat-header-text p {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        console.log("Sayfa yüklendi, JavaScript çalışıyor");
+        var chatMessages = document.getElementById('chat-messages');
+        var userMessage = document.getElementById('user-message');
+        var sendButton = document.getElementById('send-button');
+        var themeOptions = document.querySelectorAll('.theme-option');
         
-        const chatMessages = document.getElementById('chat-messages');
-        const userMessage = document.getElementById('user-message');
-        const sendButton = document.getElementById('send-button');
+        // Create a unique session ID
+        var sessionId = Math.random().toString(36).substring(2, 15);
         
-        // Session ID oluştur
-        const sessionId = Math.random().toString(36).substring(2, 15);
-        console.log("Session ID:", sessionId);
-        
-        // Mesaj ekleyen fonksiyon
+        // Function to add a message to the chat
         function addMessage(content, isUser) {
-            console.log(`Mesaj ekleniyor: ${isUser ? 'Kullanıcı' : 'Bot'} - ${content.substring(0, 30)}...`);
-            
-            const messageDiv = document.createElement('div');
+            var messageDiv = document.createElement('div');
             messageDiv.className = isUser ? 'message user' : 'message bot';
             
-            const contentDiv = document.createElement('div');
+            var contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
             
             if (!isUser) {
-                const avatar = document.createElement('div');
+                var avatar = document.createElement('div');
                 avatar.className = 'bot-avatar';
                 avatar.innerHTML = '<i class="fas fa-robot"></i>';
                 contentDiv.appendChild(avatar);
             }
             
-            contentDiv.innerHTML += content.replace(/\n/g, '<br>');
+            var span = document.createElement('span');
+            span.innerHTML = content.replace(/\n/g, '<br>');
+            contentDiv.appendChild(span);
+            
             messageDiv.appendChild(contentDiv);
             chatMessages.appendChild(messageDiv);
             
-            // Aşağı kaydır
+            // Scroll to bottom
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
         
-        // Mesaj gönderme fonksiyonu
+        // Function to send a message
         function sendMessage() {
-            const message = userMessage.value.trim();
+            var message = userMessage.value.trim();
             if (!message) return;
             
-            console.log("Kullanıcı mesajı:", message);
-            
-            // Kullanıcı mesajını ekle
+            // Add user message to chat
             addMessage(message, true);
             
-            // Input alanını temizle
+            // Clear input
             userMessage.value = '';
             
-            // Yükleniyor mesajı
-            const loadingMsg = "Yanıt yükleniyor...";
-            const loadingDiv = document.createElement('div');
+            // Loading message
+            var loadingDiv = document.createElement('div');
             loadingDiv.className = 'message bot';
-            loadingDiv.innerHTML = `<div class="message-content"><div class="bot-avatar"><i class="fas fa-spinner fa-spin"></i></div>${loadingMsg}</div>`;
+            loadingDiv.innerHTML = '<div class="message-content"><div class="bot-avatar"><i class="fas fa-spinner fa-spin"></i></div><span>Düşünüyorum...</span></div>';
             chatMessages.appendChild(loadingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             
-            // API isteği
-            console.log("API isteği gönderiliyor");
+            // Send request
             fetch('/api/bilgecan/mesaj', {
                 method: 'POST',
                 headers: {
@@ -136,51 +366,70 @@
                     session_id: sessionId
                 }),
             })
-            .then(response => {
-                console.log("API yanıtı alındı, durum kodu:", response.status);
+            .then(function(response) {
                 return response.json();
             })
-            .then(data => {
-                console.log("API veri yanıtı:", data);
-                
-                // Yükleniyor mesajını kaldır
+            .then(function(data) {
+                // Remove loading message
                 chatMessages.removeChild(loadingDiv);
                 
-                // Bot cevabını ekle
+                // Add bot response
                 addMessage(data.cevap || "Üzgünüm, bir yanıt alamadım.", false);
             })
-            .catch(error => {
-                console.error("API hatası:", error);
-                
-                // Yükleniyor mesajını kaldır
+            .catch(function(error) {
+                // Remove loading message
                 chatMessages.removeChild(loadingDiv);
                 
-                // Hata mesajı ekle
+                // Add error message
                 addMessage("Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.", false);
             });
         }
         
-        // Event listener'ları ekle
+        // Event listeners
         sendButton.addEventListener('click', function() {
-            console.log("Gönder butonuna tıklandı");
             sendMessage();
         });
         
         userMessage.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                console.log("Enter tuşuna basıldı");
                 sendMessage();
             }
         });
         
-        // Test amaçlı konsoldan çağrılabilir
-        window.testMessage = function(msg) {
-            userMessage.value = msg || "Test mesajı";
-            sendMessage();
-        };
+        // Theme selection
+        themeOptions.forEach(function(option) {
+            option.addEventListener('click', function() {
+                // Remove active class from all options
+                themeOptions.forEach(function(opt) {
+                    opt.classList.remove('active');
+                });
+                
+                // Add active class to clicked option
+                this.classList.add('active');
+                
+                var theme = this.getAttribute('data-theme');
+                var chatHeader = document.querySelector('.chat-header');
+                var sendButton = document.querySelector('.chat-send-button');
+                
+                // Apply theme
+                if (theme === 'purple') {
+                    chatHeader.style.background = 'linear-gradient(90deg, #8b5cf6, #6d28d9)';
+                    sendButton.style.background = '#8b5cf6';
+                } else if (theme === 'green') {
+                    chatHeader.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+                    sendButton.style.background = '#10b981';
+                } else if (theme === 'orange') {
+                    chatHeader.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
+                    sendButton.style.background = '#f59e0b';
+                } else {
+                    chatHeader.style.background = 'linear-gradient(90deg, #3b82f6, #1d4ed8)';
+                    sendButton.style.background = '#3b82f6';
+                }
+            });
+        });
         
-        console.log("JavaScript kurulumu tamamlandı");
+        // Focus input on load
+        userMessage.focus();
     });
-    
 </script>
 {% endblock %}
